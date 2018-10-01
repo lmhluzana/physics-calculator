@@ -1,0 +1,36 @@
+﻿<Window x:Name="Simple_Calculator1" x:Class="WpfApp6.Simple_Calculator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp6"
+        mc:Ignorable="d"
+        Title="Simple_Calculator" Height="800" Width="800">
+    <Grid x:Name="opt" Margin="0,0,-8,-21">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="329*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="input1" HorizontalAlignment="Left" Height="154" TextWrapping="Wrap" VerticalAlignment="Top" Width="772" Margin="10,10,0,0" Grid.ColumnSpan="2"/>
+        <Button x:Name="one" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="62,501,0,0" RenderTransformOrigin="0.5,0.5" Height="77" Click="seven_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="two" Content="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="85,501,0,0" RenderTransformOrigin="0.397,0.668" Height="77" Click="seven_Click" Grid.Column="1"/>
+        <Button x:Name="three" Content="3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" Margin="258,501,0,0" Height="77" Click="seven_Click" Grid.Column="1"/>
+        <Button x:Name="four" Content="4" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="62,364,0,0" RenderTransformOrigin="0.744,3.218" Height="77" Click="seven_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="five" Content="5" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" RenderTransformOrigin="5.291,5.415" Margin="85,364,0,0" Height="77" Click="seven_Click" Grid.Column="1"/>
+        <Button x:Name="six" Content="6" HorizontalAlignment="Left" Margin="258,364,0,0" VerticalAlignment="Top" Width="97" RenderTransformOrigin="0.096,0.48" Height="77" Click="seven_Click" Grid.Column="1"/>
+        <Button x:Name="Equal" Content="=" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="565,526,0,0" Click="Equal_Click" Height="206" Grid.Column="1"/>
+        <Button x:Name="add" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="439,649,0,0" Height="82" Click="seven_Click" RenderTransformOrigin="-0.313,0.52" Grid.Column="1"/>
+        <Button x:Name="multiply" Content="x" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="439,501,0,0" Height="77" Click="minus_Click" Grid.Column="1"/>
+        <Button x:Name="divide" Content="/" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="439,364,0,0" Height="77" Click="minus_Click" Grid.Column="1"/>
+        <Button x:Name="seven" Content="7" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="62,232,0,0" Height="77" Click="seven_Click" RenderTransformOrigin="-0.737,2.894" Grid.ColumnSpan="2"/>
+        <Button x:Name="clear" Content="clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="565,364,0,0" Height="77" Click="clear_Click" Grid.Column="1"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" Margin="258,649,0,0" Height="77" Click="Button_Click" Grid.Column="1"/>
+        <Button x:Name="main" Content="main" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="575,232,0,0" Height="77" Click="main_Click" Grid.Column="1"/>
+        <Button x:Name="zero" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="62,652,0,0" RenderTransformOrigin="1.558,3.882" Height="77" Click="seven_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="dot" Content="." HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="85,649,0,0" Height="77" Click="seven_Click" RenderTransformOrigin="0.202,0.524" Grid.Column="1"/>
+        <Button x:Name="nine" Content="9" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" RenderTransformOrigin="5.28,3.776" Margin="258,232,0,0" Height="77" Click="seven_Click" Grid.Column="1"/>
+        <Button x:Name="eight" Content="8" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="85,232,0,0" Height="77" Click="seven_Click" Grid.Column="1"/>
+        <Button x:Name="subtract" Content="-" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Height="77" Margin="439,232,0,0" Click="minus_Click" Grid.Column="1"/>
+
+    </Grid>
+</Window>

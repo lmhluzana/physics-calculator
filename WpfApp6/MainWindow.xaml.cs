@@ -20,9 +20,25 @@ namespace WpfApp6
     /// </summary>
     public partial class MainWindow : Window
     {
+        graphic myW;
+        Simple_Calculator myW2;
         public MainWindow()
         {
             InitializeComponent();
+            myW = new graphic();
+            myW2 = new Simple_Calculator();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            myW2.Show();
+            main1.Hide();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            myW.Show();
+            main1.Hide();
         }
     }
 }
