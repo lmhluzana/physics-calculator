@@ -24,14 +24,13 @@ namespace WpfApp6
         public Simple_Calculator()
         {
             InitializeComponent();
-           
         }
         string input = string.Empty;
         string oprd1  = string.Empty;
         string oprd2  = string.Empty;
         double resul = 0;
         string opera;
-       
+
         private void Equal_Click(object sender, RoutedEventArgs e)
         {
             SpeechSynthesizer synth = new SpeechSynthesizer();
@@ -48,22 +47,26 @@ namespace WpfApp6
                     string sum = Convert.ToString(Math.Round(opd1 + opd2, 10));
                     input1.Text = oprd1 +" + "+ oprd2 + " = " + sum;
                     synth.Speak(opd1 + "+" + opd2 + "=" + sum);
+                    opera += string.Empty;
                     break;
                 case "-":
                     string diff = Convert.ToString(Math.Round(opd1 - opd2, 10));
                     input1.Text = oprd1 + " - " + oprd2 + " = " + diff;
                     synth.Speak(opd1 + "minus" + opd2 + "=" + diff);
+                    opera += string.Empty;
                     break;
-                case "x":
+                case "*":
                     string pro = Convert.ToString(Math.Round(opd1 * opd2, 10));
                     input1.Text = oprd1 + " x " + oprd2 + " = " + pro;
-                    synth.Speak(opd1 + "*" + opd2 + "=" + pro);
+                    synth.Speak(opd1 + "multiplied by" + opd2 + "=" + pro);
+                    opera += string.Empty;
                     break;
 
                 case "/":
                     string co = Convert.ToString(Math.Round(opd1 / opd2, 10));
                     input1.Text = oprd1 + " / " + oprd2 + " = " + co;
                     synth.Speak(opd1 + "divided by " + opd2 + "=" + co);
+                    opera += string.Empty;
                     break;
 
                 default:
@@ -73,82 +76,54 @@ namespace WpfApp6
             }
         }
 
-        private void add_Click(object sender, RoutedEventArgs e)
-        {
-            ;
-        }
-
-        private void subtract_Click(object sender, RoutedEventArgs e)
-        {
-            ;
-        }
-
-        private void multiply_Click(object sender, RoutedEventArgs e)
-        {
-            ;
-        }
-
         private void clear_Click(object sender, RoutedEventArgs e)
         {
-            this.input1.Text = "";
+            this.input1.Text = string.Empty;
             this.input = string.Empty;
             this.oprd1 = string.Empty;
             this.oprd2 = string.Empty;
         }
 
-        private void seven_Click(object sender, RoutedEventArgs e)
+        private void seven_Click(object sender, RoutedEventArgs e) 
         {
+           
             this.input1.Text = string.Empty;
             Button b = (Button)sender;
             input += b.Content;
             this.input1.Text += input;
         }
 
-       
-
         private void main_Click(object sender, RoutedEventArgs e)
         {
             Simple_Calculator1.Hide();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void combo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ;
-        }
-
+   
         private void minus_Click(object sender, RoutedEventArgs e)
         {
-            Button c = (Button)sender;
-            opera += c.Content;
-            if (opera == "-")
-            {
-                oprd1 = input;
-                opera = "-";
-                input = string.Empty;
-            }
-            if (opera == "+")
-            {
-                oprd1 = input;
-                opera = "+";
-                input = string.Empty;
-            }
-            if (opera == "/")
-            {
-                oprd1 = input;
-                opera = "/";
-                input = string.Empty;
-            }
-            if (opera == "x")
-            {
-                oprd1 = input;
-                opera = "x";
-                input = string.Empty;
-            }
+             oprd1 = input;
+             opera = "-";
+             input = string.Empty; 
+        }
+
+        private void divide_Click(object sender, RoutedEventArgs e)
+        {
+            oprd1 = input;
+            opera = "/";
+            input = string.Empty;
+        }
+
+        private void mult_Click(object sender, RoutedEventArgs e)
+        {
+            oprd1 = input;
+            opera = "*";
+            input = string.Empty;
+        }
+
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+            oprd1 = input;
+            opera = "+";
+            input = string.Empty;
         }
     }
-}//
+}
