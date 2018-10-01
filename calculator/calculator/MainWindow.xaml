@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="478.5" Width="431">
     <Grid>
-        <Button x:Name="sinBtn" Content="Button" HorizontalAlignment="Left" Margin="301,236,0,0" VerticalAlignment="Top" Width="75" Click="sinBtn_Click"/>
+        <Button x:Name="sinBtn" Content="Tests" HorizontalAlignment="Left" Margin="338,417,0,0" VerticalAlignment="Top" Width="75" Click="sinBtn_Click"/>
+        <TextBox x:Name="txtInput" HorizontalAlignment="Left" Height="34" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="403"/>
 
     </Grid>
 </Window>
