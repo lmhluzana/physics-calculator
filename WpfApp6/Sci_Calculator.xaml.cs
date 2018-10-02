@@ -57,12 +57,24 @@ namespace WpfApp6
             bool pos = (exp >= 0) ? true : false;
             exp = (exp >= 0) ? exp : -exp;
             decimal dcRes = 1;
-            decimal b = 0, dec = 1;
-            while (b != exp)
+            if (exp >= 1)
             {
-                dcRes = dcRes * baseNum * dec;
-                if (exp - b < dec) { dec = dec * 0.1m; }
-                b += dec;
+                for (int b = 0; b < exp; b++)
+                {
+                    dcRes = dcRes * baseNum;
+                }
+            }
+            else
+            {
+                decimal X = 0,
+                        prevX = (decimal)(Math.Sqrt((double)baseNum)) + baseNum / 2;
+                while (true)
+                {
+                    X = (prevX + baseNum/((decimal)exponent(prevX, (int)(1/exp - 1))))/2;
+                    if (prevX == X) { break; }
+                    prevX = X;
+                }
+                return Convert.ToDouble(X);
             }
             if (pos) return Convert.ToDouble(dcRes);
             return 1 / Convert.ToDouble(dcRes);
@@ -73,14 +85,22 @@ namespace WpfApp6
             bool pos = (exp >= 0) ? true : false;
             exp = (exp >= 0) ? exp : -exp;
             double dbRes = 1;
-            int b = 0;
-            while (b < exp)
+            if (exp >= 1)
             {
-                dbRes = dbRes * baseNum;
+                for (int b = 0; b < exp; b++)
+                {
+                    dbRes = dbRes * baseNum;
+                }
             }
+            else { return 1; }
             if (pos) return Convert.ToDouble(dbRes);
             return 1 / Convert.ToDouble(dbRes);
         }
+        
+        //public double approx(double baseNum)
+        //{
+        //    List<Tuple<double>> roots = new List<Tuple<double>>(,);
+        //}
 
         /// <summary>
         /// Log Function
@@ -221,7 +241,8 @@ namespace WpfApp6
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            /*// Sin tests
+            /*
+            // Sin tests
             Tester.TestEq(Sin(0), 0);
             Tester.TestEq(Sin(pi / 2), 1.0);
             // Cos tests
@@ -233,14 +254,26 @@ namespace WpfApp6
             //Factorial Tests
             Tester.TestEq(factorial(0), 1);
             Tester.TestEq(factorial(1), 1);
-            Tester.TestEq(factorial(4), 24); */
+            Tester.TestEq(factorial(4), 24); 
             // Log tests
             Tester.TestEq(logarithms(10, 100), 2);
             Tester.TestEq(logarithms(2, 64), 6);
             Tester.TestEq(logarithms(3, 81), 4);
             Tester.TestEq(logarithms(2, 2), 1);
             Tester.TestEq(logarithms(1, 1), -69);
-            Tester.TestEq(logarithms(0.01, 10000), -4);
+            Tester.TestEq(logarithms(0.01, 10000), -4); */
+            // Exponent Tests
+            Tester.TestEq(exponent(1, 1), 1);
+            Tester.TestEq(exponent(1, 0), 1);
+            Tester.TestEq(exponent(0, 1), 0);
+            // Roots
+            Tester.TestEq(exponent(16m, 1/2m), 4);
+            Tester.TestEq(exponent(9m, 1/2m), 3);
+            Tester.TestEq(exponent(27m, 1/3m), 3);
+            Tester.TestEq(exponent(64m, 1 / 3m), 4);
+            Tester.TestEq(exponent(1000m, 1 / 3m), 10);
+            Tester.TestEq(exponent(16m, 1 / 4m), 2);
+
 
         }
     }
