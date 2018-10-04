@@ -28,6 +28,7 @@ namespace WpfApp6
         decimal pi = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196442881097566593344612847564823378678316527120190914m;
         decimal rt2 = 1.41421356237309504880168872420969807856967187537694807317667973799073247846210703885038753432764157273501384623091229702492483605585073721264412149709993583141322266592750559275579995050115278206057147010955997160597027453459686201472851m;
         decimal rt3 = 1.73205080756887729352744634150587236694280525381038062805580697945193301690880003708114618675724857567562614141540670302996994509499895247881165551209437364852809323190230558206797482010108467492326501531234326690332288665067225466892183m;
+        decimal euler = 2.718281828459045235360287471352662497757247093699959574966967627724076630353m;
         bool specCase = false;
         bool rad = true;
         
@@ -46,6 +47,22 @@ namespace WpfApp6
             return factRes;
         }
 
+        public double Absolute(double num)
+        {
+            num = (num < 0) ? -1 * num : num;
+            return num;
+        }
+        public decimal Absolute(decimal num)
+        {
+            num = (num < 0) ? -1 * num : num;
+            return num;
+        }
+        public int Absolute(int num)
+        {
+            num = (num < 0) ? -1 * num : num;
+            return num;
+        }
+
         /// <summary>
         /// Exponent Function
         /// </summary>
@@ -55,7 +72,7 @@ namespace WpfApp6
         public double exponent(decimal baseNum, decimal exp)
         {
             bool pos = (exp >= 0) ? true : false;
-            exp = (exp >= 0) ? exp : -exp;
+            exp = Absolute(exp);
             decimal dcRes = 1;
             if (exp >= 1)
             {
@@ -64,18 +81,19 @@ namespace WpfApp6
                     dcRes = dcRes * baseNum;
                 }
             }
-            else
+            else if (exp > 0)
             {
                 decimal X = 0,
                         prevX = (decimal)(Math.Sqrt((double)baseNum)) + baseNum / 2;
                 while (true)
                 {
                     X = (prevX + baseNum/((decimal)exponent(prevX, (int)(1/exp - 1))))/2;
-                    if (prevX == X) { break; }
+                    if ((prevX - X) < 0.00000000000001m) { break; }
                     prevX = X;
                 }
                 return Convert.ToDouble(X);
             }
+            else { return 0; }
             if (pos) return Convert.ToDouble(dcRes);
             return 1 / Convert.ToDouble(dcRes);
         }
@@ -83,7 +101,7 @@ namespace WpfApp6
         public double exponent(int baseNum, int exp)
         {
             bool pos = (exp >= 0) ? true : false;
-            exp = (exp >= 0) ? exp : -exp;
+            exp = Absolute(exp);
             double dbRes = 1;
             if (exp >= 1)
             {
@@ -110,26 +128,54 @@ namespace WpfApp6
         /// <returns></returns>
         public double logarithms(double b, double n)
         {
+            double res = n - 1;
             try
             {
                 if (b == 1 || b == 0) throw new InvalidOperationException();
-                double comp, min, max, mid;
-                double r = n / b;
-                if (r > 1) { min = 1; max = 10; }
-                else if (r < 1) { min = 0; max = 1; }
-                else { return 1; }
-                mid = (min + max) / 2;
-                while (true)
+                if (!(Absolute((decimal)b - euler) < 0.0000000000001m)) { return logarithms((double)euler, n) / logarithms((double)euler, b); };
+                
+                for (int i = 2; i < 40; i++)
                 {
-                    comp = n - exponent(Convert.ToDecimal(b), Convert.ToDecimal(mid));
-                    if (comp > 0) { min = mid; }
-                    else if (comp < 0) { max = mid; }
-                    else { return mid; }
-                    mid = (min + max) / 2;
+                    res = res + (exponent(-1, i - 1) / i) * exponent((decimal)(n - 1), i);
                 }
             }
-            catch (InvalidOperationException ex) { MessageBox.Show("The base of a log cannot equal 1 or 0" + ex.ToString(), "Maths Error"); }
-            return -69;
+            catch (InvalidOperationException ex) { MessageBox.Show("The base of a log cannot equal 1 or 0 \n" + ex.ToString(), "Maths Error"); }
+            return res;
+        }
+
+        public decimal logarithms(decimal b, decimal n)
+        {
+            decimal min, mid, max;
+            int len;
+
+            for (int i = 0; i < 40; i++)
+            {
+
+            }
+
+            //decimal res = 0, 
+            //        res1 = 0,
+            //        prevN = (decimal)(Math.Log((double)n)) - 1;
+            //while (true)
+            //{
+            //    prevN = ((decimal)exponent(b, prevN) + n)/ 2;
+            //    //if ((n - res) < 0) {  prevR }
+            //    prevR = res;
+            //}
+            //decimal res1 = n - 1;
+            //decimal res = 0;
+            //try
+            //{
+            //    if (!(b == euler)) { return logarithms(euler, n) / logarithms(euler, b); };
+
+            //    for (int i = 2; i < 40; i++)
+            //    {
+            //        res1 = (decimal)(exponent(-1, i - 1) * exponent((n - 1), i) / i);
+            //        res += res1;
+            //    }
+            //}
+            //catch (InvalidOperationException ex) { MessageBox.Show("The base of a log cannot equal 1 or 0 \n" + ex.ToString(), "Maths Error"); }
+            return null;
         }
 
         /// <summary>
@@ -191,7 +237,11 @@ namespace WpfApp6
             dbSinRes += Convert.ToDouble(lsSinRes.Sum());
             return dbSinRes;
         }
-        public double Arcsin(decimal theta) { return (Sin(theta)); }
+        public double Arcsin(decimal theta)
+        {
+
+            return (Sin(theta));
+        }
         public double Cosec(decimal theta)
         {
             try
@@ -241,7 +291,7 @@ namespace WpfApp6
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             // Sin tests
             Tester.TestEq(Sin(0), 0);
             Tester.TestEq(Sin(pi / 2), 1.0);
@@ -256,12 +306,12 @@ namespace WpfApp6
             Tester.TestEq(factorial(1), 1);
             Tester.TestEq(factorial(4), 24); 
             // Log tests
-            Tester.TestEq(logarithms(10, 100), 2);
-            Tester.TestEq(logarithms(2, 64), 6);
-            Tester.TestEq(logarithms(3, 81), 4);
-            Tester.TestEq(logarithms(2, 2), 1);
-            Tester.TestEq(logarithms(1, 1), -69);
-            Tester.TestEq(logarithms(0.01, 10000), -4); */
+            Tester.TestEq(logarithms(2m, 4m), 2);
+            Tester.TestEq(logarithms(2m, 64m), 6);
+            Tester.TestEq(logarithms(3m, 81m), 4);
+            Tester.TestEq(logarithms(2m, 2m), 1);
+            Tester.TestEq(logarithms(1m, 1m), -69);
+            Tester.TestEq(logarithms(0.01m, 10000m), -4); 
             // Exponent Tests
             Tester.TestEq(exponent(1, 1), 1);
             Tester.TestEq(exponent(1, 0), 1);
@@ -275,6 +325,11 @@ namespace WpfApp6
             Tester.TestEq(exponent(16m, 1 / 4m), 2);
 
 
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Clear();
         }
     }
 }

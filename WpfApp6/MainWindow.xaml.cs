@@ -43,7 +43,6 @@ namespace WpfApp6
             myW2.Show();
             main1.Hide();
         }
-        
 
         private void Sci_Calculator_Click(object sender, RoutedEventArgs e)
         {

@@ -28,7 +28,7 @@ namespace WpfApp6
         string input = string.Empty;
         string oprd1  = string.Empty;
         string oprd2  = string.Empty;
-        double resul = 0;
+        double result = 0;
         string opera;
 
         private void Equal_Click(object sender, RoutedEventArgs e)

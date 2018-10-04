@@ -17,7 +17,7 @@ namespace WpfApp6
     /// <summary>
     /// Interaction logic for graphic.xaml
     /// </summary>
-    public partial class graphic : Window
+    public partial class graphic : Sci_Calculator
     {
         public graphic()
         {
