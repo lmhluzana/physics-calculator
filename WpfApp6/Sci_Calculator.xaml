@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="Sci_Calculator" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="txtInp" HorizontalAlignment="Left" Height="61" Margin="90,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="614"/>
-        <Button x:Name="btnTest" Content="Test" HorizontalAlignment="Left" Margin="709,51,0,0" VerticalAlignment="Top" Width="75" Click="btnTest_Click"/>
-        <Label x:Name="lblRes" Content="= Res" HorizontalAlignment="Left" Margin="90,41,0,0" VerticalAlignment="Top" Width="226" Height="30"/>
+        <TextBox x:Name="txtInp" HorizontalAlignment="Left" Height="61" Margin="90,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="691"/>
+        <Button x:Name="btnTest" Content="Test" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Width="75" Click="btnTest_Click"/>
+        <Label x:Name="lblRes" Content="= Res" HorizontalAlignment="Left" Margin="547,41,0,0" VerticalAlignment="Top" Width="226" Height="30"/>
         <Button x:Name="btnEquals" Content="=" HorizontalAlignment="Left" Margin="707,244,0,0" VerticalAlignment="Top" Width="75" Height="151" FontSize="48"/>
         <Button x:Name="btnBack" HorizontalAlignment="Left" Margin="707,192,0,0" VerticalAlignment="Top" Width="74" Height="47" RenderTransformOrigin="0.533,0.489" Content="&lt;X" FontSize="16"/>
         <Button x:Name="btnDivide" Content="/" HorizontalAlignment="Left" Margin="707,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
@@ -20,7 +20,7 @@
         <Button x:Name="btnClear" HorizontalAlignment="Left" Margin="707,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Content="CLEAR" Click="btnClear_Click"/>
         <Button x:Name="btnTimes" Content="x" HorizontalAlignment="Left" Margin="627,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
         <Button x:Name="btnZero" Content="0" HorizontalAlignment="Left" Margin="547,348,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
-        <Button x:Name="btnDegRad" Content="RAD" HorizontalAlignment="Left" Margin="627,88,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
+        <Button x:Name="btnDegRad" Content="RAD" HorizontalAlignment="Left" Margin="627,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnDegRad_Click"/>
         <Button x:Name="btnMinus" Content="-" HorizontalAlignment="Left" Margin="547,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="20"/>
         <Button x:Name="btnDecimal" Content="," HorizontalAlignment="Left" Margin="627,348,0,0" VerticalAlignment="Top" Width="74" Height="47" FontSize="20"/>
         <Button x:Name="btnTwo" Content="2" HorizontalAlignment="Left" Margin="547,192,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>

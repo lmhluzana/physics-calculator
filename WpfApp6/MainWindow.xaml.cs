@@ -38,16 +38,22 @@ namespace WpfApp6
             myW.Show();
             main1.Hide();
         }
-        private void Simp_Calculator_Click(object sender, RoutedEventArgs e)
-        {
-            myW2.Show();
-            main1.Hide();
-        }
 
         private void Sci_Calculator_Click(object sender, RoutedEventArgs e)
         {
             myW3.Show();
             main1.Hide();
         }
+
+        private void Simp_Calculator_Click(object sender, RoutedEventArgs e)
+        {
+            myW2.Show();
+            main1.Hide();
+        }
+    }
+
+    public partial class SciCalcWindow : Window
+    {
+
     }
 }

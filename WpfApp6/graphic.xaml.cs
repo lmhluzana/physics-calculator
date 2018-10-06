@@ -17,11 +17,12 @@ namespace WpfApp6
     /// <summary>
     /// Interaction logic for graphic.xaml
     /// </summary>
-    public partial class graphic : Sci_Calculator
+    public partial class graphic : SciCalcWindow
     {
         public graphic()
         {
             InitializeComponent();
         }
     }
+    
 }

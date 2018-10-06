@@ -5,6 +5,11 @@ VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "WpfApp6\Calculator.csproj", "{7A4EDD55-2956-48A6-A928-33E0DBCC2EFF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5DDA6E8B-2251-43C4-9E94-2F5AA28E33D7}"
+	ProjectSection(SolutionItems) = preProject
+		Trigonometry.cs = Trigonometry.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

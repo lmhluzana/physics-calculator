@@ -64,6 +64,7 @@
     <Compile Include="Simple Calculator.xaml.cs">
       <DependentUpon>Simple Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Trigonometry.cs" />
     <Page Include="graphic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
