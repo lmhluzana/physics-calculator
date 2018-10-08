@@ -92,20 +92,31 @@ namespace WpfApp6
             decimal cos(decimal theta)
             {
                 int len = 50;
-                int n;
-                decimal Res = 0;
+                decimal Res = 1;
+                decimal prevR = 0;
                 int[] exp = new int[len];
                 Exponent sign;
                 Exponent t;
 
-                for (int num = 0; num < len; num++) { exp[num] = 2 * num; };
-                foreach (int i in exp)
+                //for (int num = 0; num < len; num++) { exp[num] = 2 * num; };
+                //foreach (int i in exp)
+                for (int n = 0; n < len; n++)
                 {
-                    n = i / 2;
-                    sign = new Exponent(-1, n);
-                    t = new Exponent(theta, i);
+                    if (n % 2 == 0)
+                    {
+                        sign = new Exponent(-1, n);
+                        t = new Exponent(theta, n);
 
-                    Res += sign.Res * t.Res / (decimal)factorial(i);
+                        Res += sign.Res * t.Res / (decimal)factorial(n);
+                        if (Res - prevR < 0.00000000000000000000000001m) { break; }
+                        prevR = Res;
+                    }
+
+                    //sign = new Exponent(-1, n);
+                    //t = new Exponent(theta, i);
+
+                    //Res += sign.Res * t.Res / (decimal)factorial(i);
+                    //if (Res - prevR < 0.00000000000000000000000001m) { break; }
                 }
                 return Res;
             }

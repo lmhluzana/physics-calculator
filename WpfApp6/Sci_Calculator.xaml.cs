@@ -306,13 +306,17 @@ namespace WpfApp6
             trigObj = new Trig(pi, "sin");
             Tester.TestEq(trigObj.Res, 0m);
             //Cos tests
-            Trig cosObj = new Trig();
-            Tester.TestEq(Cos(0), 1);
-            Tester.TestEq(Cos(pi / 2), 0);
-            Tester.TestEq(Cos(pi), -1);
+            Trig cosObj = new Trig(0, "cos");
+            Tester.TestEq(cosObj.Res, 1m);
+            cosObj = new Trig(pi/2, "cos");
+            Tester.TestEq(cosObj.Res, 0m);
+            cosObj = new Trig(pi, "cos");
+            Tester.TestEq(cosObj.Res, -1m);
             //// Tan Tests
-            //Tester.TestEq(Tan(0), 0);
-            //Tester.TestEq(Cos(pi / 2), -1);
+            Trig tanObj = new Trig(0, "tan");
+            Tester.TestEq(tanObj.Res, 0m);
+            tanObj = new Trig(pi/2, "tan");
+            Tester.TestEq(tanObj.Res, -1m);
             ////Factorial Tests
             //Tester.TestEq(factorial(0), 1);
             //Tester.TestEq(factorial(1), 1);
