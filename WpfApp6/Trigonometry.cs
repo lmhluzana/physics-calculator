@@ -6,7 +6,7 @@ namespace WpfApp6
     public class Function : Sci_Calculator
     {
         public decimal X { get; set; }
-        public decimal res { get; set; }
+        public decimal Res { get; set; }
 
         public Function(decimal x)
         {
@@ -28,17 +28,17 @@ namespace WpfApp6
                 switch (funct)
                 {
                     case "sin":
-                        res = sin(x); break;
+                        Res = sin(x); break;
                     case ("cos"):
-                        res = cos(x); break;
+                        Res = cos(x); break;
                     case ("tan"):
-                        res = sin(x) / cos(x); break;
+                        Res = sin(x) / cos(x); break;
                     case ("arcsin"):
-                        res = 1 / sin(x); break;
+                        Res = 1 / sin(x); break;
                     case ("arccos"):
-                        res = 1 / cos(x); break;
+                        Res = 1 / cos(x); break;
                     case ("arctan"):
-                        res = cos(x) / sin(x); break;
+                        Res = cos(x) / sin(x); break;
                     case ("cosec"):
                         break;
                     case ("sec"):
@@ -62,33 +62,45 @@ namespace WpfApp6
                 int len = 50;
                 int n;
                 decimal[] lsSinRes = new decimal[len];
-                decimal dbSinRes = 0;
+                decimal Res = 0;
                 decimal prevR = 0;
                 int[] exp = new int[len];
+                Exponent sign;
+                Exponent t;
+
                 for (int num = 0; num < len; num++) { exp[num] = 2 * num + 1; };
                 foreach (int i in exp)
                 {
                     n = i / 2;
-                    dbSinRes += (decimal)(exponent(-1, n) * exponent(theta, i) / factorial(i));
-                    if (dbSinRes == prevR) { break; }
-                    prevR = dbSinRes;
+
+                    sign = new Exponent(-1, n);
+                    t = new Exponent(theta, i);
+                    Res += sign.Res * t.Res / (decimal)factorial(i);
+                    if (Res - prevR < 0.00000000000000000000001m) { break; }
+                    prevR = Res;
                 }
-                return dbSinRes;
+                return Res;
             }
 
             decimal cos(decimal theta)
             {
                 int len = 50;
                 int n;
-                decimal cosRes = 0;
+                decimal Res = 0;
                 int[] exp = new int[len];
+                Exponent sign;
+                Exponent t;
+
                 for (int num = 0; num < len; num++) { exp[num] = 2 * num; };
                 foreach (int i in exp)
                 {
                     n = i / 2;
-                    cosRes += (decimal)(exponent(-1, n) * exponent(theta, i) / factorial(i));
+                    sign = new Exponent(-1, n);
+                    t = new Exponent(theta, i);
+
+                    Res += sign.Res * t.Res / (decimal)factorial(i);
                 }
-                return cosRes;
+                return Res;
             }
         }
     }
@@ -145,55 +157,134 @@ namespace WpfApp6
     //    }
     //}
 
-    public class Logarithm : Function
+    public class Logarithm : NatLogarithm
     {
-        public decimal b;
+        //public decimal b;
 
+        //public Logarithm(decimal b, decimal n) : base(n)
+        //{
+        //    if (!(b == euler))
+        //    {
+        //        if (b == 10) { TenLogarithm tnLog = new TenLogarithm(n); }
+        //        else
+        //        {
+        //            NatLogarithm logB = new NatLogarithm(b);
+        //            NatLogarithm logX = new NatLogarithm(n);
+        //            res = logB.res / logX.res;
+        //        }
+        //    }
+        //    else { NatLogarithm log = new NatLogarithm(b); }
+        //}
+        public NatLogarithm logB;
+        public NatLogarithm logX;
         public Logarithm(decimal b, decimal n) : base(n)
         {
-            if (!(b == euler))
-            {
-                if (b == 10) { TenLogarithm tnLog = new TenLogarithm(n); }
-                else
-                {
-                    NatLogarithm logB = new NatLogarithm(b);
-                    NatLogarithm logX = new NatLogarithm(n);
-                    res = logB.res / logX.res;
-                }
-            }
-            else { NatLogarithm log = new NatLogarithm(b); }
+            logB = new NatLogarithm(b);
+            logX = new NatLogarithm(n);
+            if (logX.Res == 0) { Res = 0; }
+            else { Res = logX.Res / logB.Res; }
         }
-
     }
 
     public class TenLogarithm : Logarithm
     {
-        public TenLogarithm(decimal n) : base(n)
+
+        public TenLogarithm(decimal b, decimal n) : base(b, n)
         {
-            b = 10m;
-            NatLogarithm log10 = new NatLogarithm(10);
-            NatLogarithm logX = new NatLogarithm(n);
-            res = logX.res / log10.res;
+            logB = new NatLogarithm(10);
+            logX = new NatLogarithm(n);
+            Res = logX.Res / logB.Res;
         }
     }
 
-    public class NatLogarithm : Logarithm
+    public class NatLogarithm : Function
     {
         public NatLogarithm(decimal n) : base(n)
         {
-            b = euler;
-            this.x = n;
-            double res = (double)n - 1;
+            decimal Res = (decimal)n - 1;
+            Exponent sign;
+            Exponent expN;
             try
             {
-                if (b == 1 || b == 0) throw new InvalidOperationException();
+                if (n == 0) throw new InvalidOperationException();
 
                 for (int i = 2; i < 40; i++)
                 {
-                    res = res + (exponent(-1, i - 1) / i) * exponent((decimal)(n - 1), i);
+                    sign = new Exponent(-1, i - 1 / i);
+                    expN = new Exponent(n - 1, i);
+                    Res = Res + (sign.Res * expN.Res);
                 }
             }
             catch (InvalidOperationException ex) { MessageBox.Show("The base of a log cannot equal 1 or 0 \n" + ex.ToString(), "Maths Error"); }
         }
     }
+
+    public class Exponent : Function
+    {
+        int intX, intP;
+
+        public Exponent(decimal x, decimal p) : base(x)
+        {
+            intX = (int)x;
+            intP = (int)p;
+            if (intX == x && intP == p) { Res = intExponent(intX, intP); }
+            else { Res = dcExponent(x, p); }
+        }
+
+        public decimal dcExponent(decimal x, decimal p)
+        {
+            bool pos = (p >= 0) ? true : false;
+            p = Absolute(p);
+            decimal dcRes = 1;
+            Exponent xPrevN;
+            try
+            {
+                if (p >= 1)
+                {
+                    for (int b = 0; b < p; b++)
+                    {
+                        dcRes = dcRes * x;
+                    }
+                }
+                else if (p > 0)
+                {
+                    decimal n = 0,
+                            prevN = (decimal)(Math.Sqrt((double)n)) + x / 2;
+                    while (true)
+                    {
+                        xPrevN = new Exponent(prevN, (int)(1 / p - 1));
+                        n = (prevN + x / xPrevN.Res) / 2;
+                        if ((prevN - n) < 0.00000000000001m) { break; }
+                        prevN = n;
+                    }
+                    Res = n;
+                }
+                else { Res = 0m; }
+            }
+            catch (Exception ex) { MessageBox.Show("Maths Error" + ex.ToString(), "Error"); }
+            if (pos) Res = dcRes;
+            Res = 1 / dcRes;
+            return Res;
+        }
+
+        public decimal intExponent(int x, int p)
+        {
+            if (x == 0) { return  0; }
+            bool pos = (p >= 0) ? true : false;
+            p = Absolute(p);
+            decimal dbRes = 1;
+            if (p >= 1)
+            {
+                for (int b = 0; b < p; b++)
+                {
+                    dbRes = dbRes * x;
+                }
+            }
+            else { Res = 1; }
+            if (pos) Res = dbRes;
+            Res = 1 / dbRes;
+            return Res;
+        }
+    }
+
 }
