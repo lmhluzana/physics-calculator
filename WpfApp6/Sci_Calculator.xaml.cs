@@ -323,7 +323,7 @@ namespace WpfApp6
             xObj = new Exponent(1000m, 1 / 3m);
             Tester.TestEq(xObj.Res, 10m);
             xObj = new Exponent(16m, 1 / 4m);
-            //Tester.TestEq(xObj.Res, 2m);
+            Tester.TestEq(xObj.Res, 2m);
             //////Log test
             //NatLogarithm ln = new NatLogarithm(1);
             //Tester.TestEq(ln.Res, 0m);

@@ -266,18 +266,25 @@ namespace WpfApp6
                 }
                 else if (p > 0)
                 {
+                    if ((1/p) % 2 == 0 && 1 / p > 2)
+                    {
+                        Res = x;
+                        decimal compP = 1 / p / 2;
+                        for(int i = 0; i < compP; i++) { Res = dcExponent(Res, 1/2m); }
+                        return Res;
+                    }
                     decimal n = 0,
                             prevN = (decimal)(Math.Sqrt((double)n)) + x / 2;
                     while (true)
                     {
                         xPrevN = new Exponent(prevN, (int)(1 / p - 1));
                         n = (prevN + x / xPrevN.Res) / 2;
-                        if ((prevN - n) < 0.00000000000001m) { break; }
+                        if (Absolute(prevN - n) < 0.0000000000000000000000000001m) { break; }
                         prevN = n;
                     }
                     Res = n;
                 }
-                else { Res = 0m; }
+                else { Res = 1m; }
             }
             catch (Exception ex) { MessageBox.Show("Maths Error" + ex.ToString(), "Error"); }
             if (pos) { return Res; }
