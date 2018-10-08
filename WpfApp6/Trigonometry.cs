@@ -49,7 +49,7 @@ namespace WpfApp6
                         throw new System.InvalidOperationException();
                 }
             }
-            catch (System.InvalidOperationException ex) { MessageBox.Show("No function recognised", "Maths Error"); }
+            catch (System.InvalidOperationException) { MessageBox.Show("No function recognised", "Maths Error"); }
 
             decimal sin(decimal theta)
             {
@@ -253,7 +253,7 @@ namespace WpfApp6
         {
             bool pos = (p >= 0) ? true : false;
             p = Absolute(p);
-            decimal dcRes = 1;
+            Res = 1;
             Exponent xPrevN;
             try
             {
@@ -261,7 +261,7 @@ namespace WpfApp6
                 {
                     for (int b = 0; b < p; b++)
                     {
-                        dcRes = dcRes * x;
+                        Res = Res * x;
                     }
                 }
                 else if (p > 0)
@@ -280,9 +280,8 @@ namespace WpfApp6
                 else { Res = 0m; }
             }
             catch (Exception ex) { MessageBox.Show("Maths Error" + ex.ToString(), "Error"); }
-            if (pos) Res = dcRes;
-            Res = 1 / dcRes;
-            return Res;
+            if (pos) { return Res; }
+            else { return 1 / Res; }
         }
 
         public decimal intExponent(int x, int p)
@@ -290,18 +289,18 @@ namespace WpfApp6
             if (x == 0) { return  0; }
             bool pos = (p >= 0) ? true : false;
             p = Absolute(p);
-            decimal dbRes = 1;
+            Res = 1;
             if (p >= 1)
             {
                 for (int b = 0; b < p; b++)
                 {
-                    dbRes = dbRes * x;
+                    Res = Res * x;
                 }
             }
             else { Res = 1; }
-            if (pos) Res = dbRes;
-            Res = 1 / dbRes;
-            return Res;
+
+            if (pos) return Res;
+            else { return 1 / Res; }
         }
     }
 

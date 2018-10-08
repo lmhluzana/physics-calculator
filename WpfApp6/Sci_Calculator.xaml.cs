@@ -298,25 +298,56 @@ namespace WpfApp6
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            //// Sin tests
-            Trig trigObj = new Trig(0, "sin");
-            Tester.TestEq(trigObj.Res, 0m);
-            trigObj = new Trig(pi / 2, "sin");
-            Tester.TestEq(trigObj.Res, 1m);
-            trigObj = new Trig(pi, "sin");
-            Tester.TestEq(trigObj.Res, 0m);
-            //Cos tests
-            Trig cosObj = new Trig(0, "cos");
-            Tester.TestEq(cosObj.Res, 1m);
-            cosObj = new Trig(pi/2, "cos");
-            Tester.TestEq(cosObj.Res, 0m);
-            cosObj = new Trig(pi, "cos");
-            Tester.TestEq(cosObj.Res, -1m);
-            //// Tan Tests
-            Trig tanObj = new Trig(0, "tan");
-            Tester.TestEq(tanObj.Res, 0m);
-            tanObj = new Trig(pi/2, "tan");
-            Tester.TestEq(tanObj.Res, -1m);
+            //// Exponent Tests
+            Exponent xObj = new Exponent(1, 1);
+            Tester.TestEq(xObj.Res, 1m);
+            xObj = new Exponent(1, 0);
+            Tester.TestEq(xObj.Res, 1m);
+            xObj = new Exponent(0, 1);
+            Tester.TestEq(xObj.Res, 0m);
+            xObj = new Exponent(0.5m, 1m);
+            Tester.TestEq(xObj.Res, 0.5m);
+            xObj = new Exponent(0.9m, 0m);
+            Tester.TestEq(xObj.Res, 1m);
+            xObj = new Exponent(0.5m, 2m);
+            Tester.TestEq(xObj.Res, 0.25m);
+            // Roots
+            xObj = new Exponent(16m, 1 / 2m);
+            Tester.TestEq(xObj.Res, 4m);
+            xObj = new Exponent(9m, 1 / 2m);
+            Tester.TestEq(xObj.Res, 3m);
+            xObj = new Exponent(27m, 1 / 3m);
+            Tester.TestEq(xObj.Res, 3m);
+            xObj = new Exponent(64m, 1 / 3m);
+            Tester.TestEq(xObj.Res, 4m);
+            xObj = new Exponent(1000m, 1 / 3m);
+            Tester.TestEq(xObj.Res, 10m);
+            xObj = new Exponent(16m, 1 / 4m);
+            //Tester.TestEq(xObj.Res, 2m);
+            //////Log test
+            //NatLogarithm ln = new NatLogarithm(1);
+            //Tester.TestEq(ln.Res, 0m);
+            //Logarithm log = new Logarithm(2, 1);
+            //Tester.TestEq(log.Res, 0m);
+            // Sin tests
+            //Trig trigObj = new Trig(0, "sin");
+            //Tester.TestEq(trigObj.Res, 0m);
+            //trigObj = new Trig(pi / 2, "sin");
+            //Tester.TestEq(trigObj.Res, 1m);
+            //trigObj = new Trig(pi, "sin");
+            //Tester.TestEq(trigObj.Res, 0m);
+            ////Cos tests
+            //Trig cosObj = new Trig(0, "cos");
+            //Tester.TestEq(cosObj.Res, 1m);
+            //cosObj = new Trig(pi/2, "cos");
+            //Tester.TestEq(cosObj.Res, 0m);
+            //cosObj = new Trig(pi, "cos");
+            //Tester.TestEq(cosObj.Res, -1m);
+            ////// Tan Tests
+            //Trig tanObj = new Trig(0, "tan");
+            //Tester.TestEq(tanObj.Res, 0m);
+            //tanObj = new Trig(pi/2, "tan");
+            //Tester.TestEq(tanObj.Res, -1m);
             ////Factorial Tests
             //Tester.TestEq(factorial(0), 1);
             //Tester.TestEq(factorial(1), 1);
@@ -328,22 +359,6 @@ namespace WpfApp6
             ////Tester.TestEq(logarithms(2m, 2m), 1);
             ////Tester.TestEq(logarithms(1m, 1m), -69);
             ////Tester.TestEq(logarithms(0.01m, 10000m), -4); 
-            //// Exponent Tests
-            //Tester.TestEq(exponent(1, 1), 1);
-            //Tester.TestEq(exponent(1, 0), 1);
-            //Tester.TestEq(exponent(0, 1), 0);
-            //// Roots
-            //Tester.TestEq(exponent(16m, 1 / 2m), 4);
-            //Tester.TestEq(exponent(9m, 1 / 2m), 3);
-            //Tester.TestEq(exponent(27m, 1 / 3m), 3);
-            //Tester.TestEq(exponent(64m, 1 / 3m), 4);
-            //Tester.TestEq(exponent(1000m, 1 / 3m), 10);
-            //Tester.TestEq(exponent(16m, 1 / 4m), 2);
-            ////Class test
-            NatLogarithm ln = new NatLogarithm(1);
-            Tester.TestEq(ln.Res, 0m);
-            Logarithm log = new Logarithm(2, 1);
-            Tester.TestEq(log.Res, 0m);
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
