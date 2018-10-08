@@ -60,24 +60,31 @@ namespace WpfApp6
                     return sinSpecCase[i];
                 }
                 int len = 50;
-                int n;
                 decimal[] lsSinRes = new decimal[len];
-                decimal Res = 0;
+                decimal Res = theta;
                 decimal prevR = 0;
                 int[] exp = new int[len];
                 Exponent sign;
                 Exponent t;
 
-                for (int num = 0; num < len; num++) { exp[num] = 2 * num + 1; };
-                foreach (int i in exp)
+                //for (int num = 0; num < len; num++) { exp[num] = 2 * num + 1; };
+                //foreach (int i in exp)
+                for (int n = 0; n < len; n++)
                 {
-                    n = i / 2;
+                    if (n % 2 == 1)
+                    {
+                        sign = new Exponent(-1, n);
+                        t = new Exponent(theta, n);
+                        Res += sign.Res * t.Res / (decimal)factorial(n);
+                        if (Res - prevR < 0.00000000000000000000000001m) { break; }
+                        prevR = Res;
+                    }
+                    //sign = new Exponent(-1, n);
+                    //t = new Exponent(theta, i);
+                    //Res += sign.Res * t.Res / (decimal)factorial(i);
+                    //if (Res - prevR < 0.00000000000000000000001m) { break; }
+                    //prevR = Res;
 
-                    sign = new Exponent(-1, n);
-                    t = new Exponent(theta, i);
-                    Res += sign.Res * t.Res / (decimal)factorial(i);
-                    if (Res - prevR < 0.00000000000000000000001m) { break; }
-                    prevR = Res;
                 }
                 return Res;
             }

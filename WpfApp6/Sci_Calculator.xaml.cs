@@ -304,11 +304,12 @@ namespace WpfApp6
             trigObj = new Trig(pi / 2, "sin");
             Tester.TestEq(trigObj.Res, 1m);
             trigObj = new Trig(pi, "sin");
-            //Tester.TestEq(trigObj.res, 0m);
-            //// Cos tests
-            //Tester.TestEq(Cos(0), 1);
-            //Tester.TestEq(Cos(pi / 2), 0);
-            //Tester.TestEq(Cos(pi), -1);
+            Tester.TestEq(trigObj.Res, 0m);
+            //Cos tests
+            Trig cosObj = new Trig();
+            Tester.TestEq(Cos(0), 1);
+            Tester.TestEq(Cos(pi / 2), 0);
+            Tester.TestEq(Cos(pi), -1);
             //// Tan Tests
             //Tester.TestEq(Tan(0), 0);
             //Tester.TestEq(Cos(pi / 2), -1);
