@@ -306,15 +306,15 @@ namespace WpfApp6
             log = new Logarithm(2m, 4m);
             Tester.TestEq(log.Res, 2m);
             log = new Logarithm(2m, 64m);
-            Tester.TestEq(log.Res, 6);
+            Tester.TestEq(log.Res, 6m);
             log = new Logarithm(3m, 81m);
-            Tester.TestEq(log.Res, 4);
+            Tester.TestEq(log.Res, 4m);
             log = new Logarithm(2m, 2m);
-            Tester.TestEq(log.Res, 1);
+            Tester.TestEq(log.Res, 1m);
             log = new Logarithm(1m, 1m);
-            Tester.TestEq(log, Decimal.MinValue);
+            Tester.TestEq(log.Res, decimal.MinValue);
             log = new Logarithm(0.1m, 1000m);
-            Tester.TestEq(log.Res, -3);
+            Tester.TestEq(log.Res, -3m);
             /////// Exponent Tests
             //Exponent xObj = new Exponent(1, 1);
             //Tester.TestEq(xObj.Res, 1m);

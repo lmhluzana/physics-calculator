@@ -66,9 +66,7 @@ namespace WpfApp6
                 int[] exp = new int[len];
                 Exponent sign;
                 Exponent t;
-
-                //for (int num = 0; num < len; num++) { exp[num] = 2 * num + 1; };
-                //foreach (int i in exp)
+                
                 for (int n = 0; n < len; n++)
                 {
                     if (n % 2 == 1)
@@ -79,12 +77,6 @@ namespace WpfApp6
                         if (Res - prevR < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
-                    //sign = new Exponent(-1, n);
-                    //t = new Exponent(theta, i);
-                    //Res += sign.Res * t.Res / (decimal)factorial(i);
-                    //if (Res - prevR < 0.00000000000000000000001m) { break; }
-                    //prevR = Res;
-
                 }
                 return Res;
             }
@@ -97,9 +89,7 @@ namespace WpfApp6
                 int[] exp = new int[len];
                 Exponent sign;
                 Exponent t;
-
-                //for (int num = 0; num < len; num++) { exp[num] = 2 * num; };
-                //foreach (int i in exp)
+                
                 for (int n = 0; n < len; n++)
                 {
                     if (n % 2 == 0)
@@ -111,12 +101,6 @@ namespace WpfApp6
                         if (Res - prevR < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
-
-                    //sign = new Exponent(-1, n);
-                    //t = new Exponent(theta, i);
-
-                    //Res += sign.Res * t.Res / (decimal)factorial(i);
-                    //if (Res - prevR < 0.00000000000000000000000001m) { break; }
                 }
                 return Res;
             }
@@ -177,46 +161,20 @@ namespace WpfApp6
 
     public class Logarithm : NatLogarithm
     {
-        //public decimal b;
-
-        //public Logarithm(decimal b, decimal n) : base(n)
-        //{
-        //    if (!(b == euler))
-        //    {
-        //        if (b == 10) { TenLogarithm tnLog = new TenLogarithm(n); }
-        //        else
-        //        {
-        //            NatLogarithm logB = new NatLogarithm(b);
-        //            NatLogarithm logX = new NatLogarithm(n);
-        //            res = logB.res / logX.res;
-        //        }
-        //    }
-        //    else { NatLogarithm log = new NatLogarithm(b); }
-        //}
+        public decimal b;
         public NatLogarithm logB;
         public NatLogarithm logX;
         public Logarithm(decimal b, decimal n) : base(n)
         {
             try
             {
-                if (n == 1 || n < 0) { throw new InvalidOperationException(); }
+                if (n == 1) { Res = 0m; }
+                if (b == 1 || b < 0) { throw new InvalidOperationException(); }
                 logB = new NatLogarithm(b);
-                logX = new NatLogarithm(n);
-                if (logX.Res == 0) { Res = 0; }
-                else { Res = logX.Res / logB.Res; }
+                if (n == 0) { Res = 0; }
+                else { Res = n / logB.Res; }
             }
-            catch (InvalidOperationException) { MessageBox.Show($"Logarithms cannot have x = {n}. \n x must be positive and not equal to 1.", "Domain Error"); Res = Decimal.MinValue; }
-        }
-    }
-
-    public class TenLogarithm : Logarithm
-    {
-
-        public TenLogarithm(decimal b, decimal n) : base(b, n)
-        {
-            logB = new NatLogarithm(10);
-            logX = new NatLogarithm(n);
-            Res = logX.Res / logB.Res;
+            catch (InvalidOperationException) { MessageBox.Show($"Logarithms domain error. \n x must be positive, and b cannot equal 1", "Domain Error"); Res = Decimal.MinValue; }
         }
     }
 
@@ -224,21 +182,20 @@ namespace WpfApp6
     {
         public NatLogarithm(decimal n) : base(n)
         {
-            decimal Res = (decimal)n - 1;
+            Res = n - 1;
             Exponent sign;
             Exponent expN;
-            try
-            {
-                if (n == 0) throw new InvalidOperationException();
+            decimal prevR = 0;
 
-                for (int i = 2; i < 40; i++)
-                {
-                    sign = new Exponent(-1, i - 1 / i);
-                    expN = new Exponent(n - 1, i);
-                    Res = Res + (sign.Res * expN.Res);
-                }
+            for (int i = 2; i < 40; i++)
+            {
+                sign = new Exponent(-1, i - 1 / i);
+                expN = new Exponent(n - 1, i);
+                Res = Res + (sign.Res * expN.Res);
+                if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
+                prevR = Res;
+
             }
-            catch (InvalidOperationException ex) { MessageBox.Show("The base of a log cannot equal 1 or 0 \n" + ex.ToString(), "Maths Error"); }
         }
     }
 
