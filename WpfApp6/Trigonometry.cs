@@ -171,8 +171,9 @@ namespace WpfApp6
                 if (n == 1) { Res = 0m; }
                 if (b == 1 || b < 0) { throw new InvalidOperationException(); }
                 logB = new NatLogarithm(b);
+                logX = new NatLogarithm(n);
                 if (n == 0) { Res = 0; }
-                else { Res = n / logB.Res; }
+                else { Res = logX.Res / logB.Res; }
             }
             catch (InvalidOperationException) { MessageBox.Show($"Logarithms domain error. \n x must be positive, and b cannot equal 1", "Domain Error"); Res = Decimal.MinValue; }
         }
@@ -182,20 +183,42 @@ namespace WpfApp6
     {
         public NatLogarithm(decimal n) : base(n)
         {
-            Res = n - 1;
-            Exponent sign;
-            Exponent expN;
-            decimal prevR = 0;
+            decimal[] lns = { 0m,
+                0.693147180559945309417232121458m,
+                1.09861228866810969139524523692m,
+                1.38629436111989061883446424292m,
+                1.60943791243410037460075933323m,
+                1.79175946922805500081247735838m,
+                1.94591014905531330510535274344m,
+                2.07944154167983592825169636437m,
+                2.19722457733621938279049047384m,
+                2.30258509299404568401799145468m };
+            decimal ln2 = lns[0];
 
-            for (int i = 2; i < 40; i++)
+            ulong exp = 0;
+            decimal temp = n;
+
+            while (temp > 2) { temp = temp / 2; exp++; }
+            n = temp;
+            int intN = (int)n;
+            if ( (decimal)intN == n) { Res = lns[intN - 1]; }
+            else
             {
-                sign = new Exponent(-1, i - 1 / i);
-                expN = new Exponent(n - 1, i);
-                Res = Res + (sign.Res * expN.Res);
-                if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
-                prevR = Res;
+                Res = n - 1;
+                Exponent sign;
+                Exponent expN;
+                decimal prevR = 0;
 
+                for (int i = 2; i < 50; i++)
+                {
+                    sign = new Exponent(-1, i - 1);
+                    expN = new Exponent(n - 1, i);
+                    Res = Res + (sign.Res * expN.Res) / i;
+                    if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
+                    prevR = Res;
+                }
             }
+            Res = exp * ln2 + Res;
         }
     }
 
