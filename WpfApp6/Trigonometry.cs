@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace WpfApp6
@@ -16,16 +17,22 @@ namespace WpfApp6
 
     public class Trig : Function
     {
-        public string funct { get; private set; }
+        public string Funct { get; private set; }
+        public bool specCase = false; 
+        public bool sin { get; private set; }
 
         public Trig(decimal x, string funct) : base(x)
         {
-            this.funct = funct;
+            Funct = funct;
             if (x > 2*pi) { x = reductionForm(x); }
+            if (x > pi) { x = pi - x; this.sin = false; }
+            else { this.sin = true; }
+            List<decimal> specAngles = new List<decimal> { 0m, pi/6, pi/3, pi/2, pi*4/3, pi*3/2, pi*5/3, 2*pi };
+            if (specAngles.Contains(x)) { specCase = true; }
 
             try
             {
-                switch (funct)
+                switch (Funct)
                 {
                     case "sin":
                         Res = sin(x); break;
