@@ -197,10 +197,15 @@ namespace WpfApp6
         public NatLogarithm logX;
         public Logarithm(decimal b, decimal n) : base(n)
         {
-            logB = new NatLogarithm(b);
-            logX = new NatLogarithm(n);
-            if (logX.Res == 0) { Res = 0; }
-            else { Res = logX.Res / logB.Res; }
+            try
+            {
+                if (n == 1 || n < 0) { throw new InvalidOperationException(); }
+                logB = new NatLogarithm(b);
+                logX = new NatLogarithm(n);
+                if (logX.Res == 0) { Res = 0; }
+                else { Res = logX.Res / logB.Res; }
+            }
+            catch (InvalidOperationException) { MessageBox.Show($"Logarithms cannot have x = {n}. \n x must be positive and not equal to 1.", "Domain Error"); Res = Decimal.MinValue; }
         }
     }
 
