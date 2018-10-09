@@ -162,18 +162,44 @@ namespace WpfApp6
     public class Logarithm : NatLogarithm
     {
         public decimal b;
-        public NatLogarithm logB;
-        public NatLogarithm logX;
+        //public NatLogarithm logB;
+        //public NatLogarithm logX;
         public Logarithm(decimal b, decimal n) : base(n)
         {
+            long count = 0;
+            decimal tempN = n;
+            decimal tempB = b;
+            bool pos = (b > 1) ? true : false;
+
             try
             {
-                if (n == 1) { Res = 0m; }
                 if (b == 1 || b < 0) { throw new InvalidOperationException(); }
-                logB = new NatLogarithm(b);
-                logX = new NatLogarithm(n);
-                if (n == 0) { Res = 0; }
-                else { Res = logX.Res / logB.Res; }
+                if (n == 1) { Res = 0m; }
+                else if (n % b == 0)
+                {
+                    if (!pos) { tempB = 1 / tempB; }
+                    while (true)
+                    {
+                        tempN = tempN / tempB;
+                        count++;
+                        if (tempN == 1) break;
+                    }
+                    if (pos) { Res = count; }
+                    else { Res = -count; }
+                }
+                else
+                {
+                    if (n == 0) { Res = 0; }
+                    //logX = new NatLogarithm(n);
+                    //else { Res = logX.Res / logB.Res; }
+                    else
+                    {
+                        this.b = (new NatLogarithm(b)).Res;
+
+                        if (pos) { Res = n / b; }
+                        else { Res = -n / b; }
+                    }
+                }
             }
             catch (InvalidOperationException) { MessageBox.Show($"Logarithms domain error. \n x must be positive, and b cannot equal 1", "Domain Error"); Res = Decimal.MinValue; }
         }
@@ -193,7 +219,7 @@ namespace WpfApp6
                 2.07944154167983592825169636437m,
                 2.19722457733621938279049047384m,
                 2.30258509299404568401799145468m };
-            decimal ln2 = lns[0];
+            decimal ln2 = lns[1];
 
             ulong exp = 0;
             decimal temp = n;
