@@ -62,8 +62,8 @@ namespace WpfApp6
             {
                 if (specCase == true)
                 {
-                    decimal[] sinSpecCase = { 0m, 0.5m, rt2 / 2, rt3 / 2, 1 };
-                    int i = Convert.ToInt32((theta / pi) * 4);
+                    decimal[] sinSpecCase = { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 };
+                    int i = Convert.ToInt32((theta / pi) * 12);
                     return sinSpecCase[i];
                 }
                 int len = 50;
@@ -90,6 +90,12 @@ namespace WpfApp6
 
             decimal cos(decimal theta)
             {
+                if (specCase == true)
+                {
+                    decimal[] cosSpecCase = { 1m, 0m, rt3 / 2, rt2 / 2, 1/2, 0m, 0m };
+                    int i = Convert.ToInt32((theta / pi) * 12);
+                    return cosSpecCase[i];
+                }
                 int len = 50;
                 decimal Res = 1;
                 decimal prevR = 0;

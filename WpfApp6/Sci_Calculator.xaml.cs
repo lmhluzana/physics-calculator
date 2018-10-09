@@ -349,18 +349,34 @@ namespace WpfApp6
             Tester.TestEq(trigObj.Res, 1m);
             trigObj = new Trig(pi, "sin");
             Tester.TestEq(trigObj.Res, 0m);
-            ////Cos tests
-            //Trig cosObj = new Trig(0, "cos");
-            //Tester.TestEq(cosObj.Res, 1m);
-            //cosObj = new Trig(pi/2, "cos");
-            //Tester.TestEq(cosObj.Res, 0m);
-            //cosObj = new Trig(pi, "cos");
-            //Tester.TestEq(cosObj.Res, -1m);
+            //Cos tests
+            Trig cosObj = new Trig(0, "cos");
+            Tester.TestEq(cosObj.Res, 1m);
+            cosObj = new Trig(pi / 2, "cos");
+            Tester.TestEq(cosObj.Res, 0m);
+            cosObj = new Trig(pi, "cos");
+            Tester.TestEq(cosObj.Res, -1m);
             ////// Tan Tests
-            //Trig tanObj = new Trig(0, "tan");
-            //Tester.TestEq(tanObj.Res, 0m);
-            //tanObj = new Trig(pi/2, "tan");
-            //Tester.TestEq(tanObj.Res, -1m);
+            Trig tanObj = new Trig(0, "tan");
+            Tester.TestEq(tanObj.Res, 0m);
+            tanObj = new Trig(pi / 2, "tan");
+            Tester.TestEq(tanObj.Res, -1m);
+            ////Arc Tests
+            //trigObj = new Trig(1m, "arcsin");
+            //Tester.TestEq(trigObj.Res, pi/2);
+            //trigObj = new Trig(0m, "arcsin");
+            //Tester.TestEq(trigObj.Res, 0m);
+            //trigObj = new Trig(1m, "arccos");
+            //Tester.TestEq(trigObj.Res, 0m);
+            //trigObj = new Trig(0m, "arccos");
+            //Tester.TestEq(trigObj.Res, pi/2);
+            //trigObj = new Trig(-1m, "arccos");
+            //Tester.TestEq(trigObj.Res, pi);
+            //trigObj = new Trig(0m, "arctan");
+            //Tester.TestEq(trigObj.Res, 0m);
+            //trigObj = new Trig(-1m, "arctan");
+            //Tester.TestEq(trigObj.Res, pi/2);
+
             ////Factorial Tests
             //Tester.TestEq(factorial(0), 1);
             //Tester.TestEq(factorial(1), 1);
