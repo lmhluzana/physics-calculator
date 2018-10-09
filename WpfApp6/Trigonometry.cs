@@ -18,16 +18,15 @@ namespace WpfApp6
     public class Trig : Function
     {
         public string Funct { get; private set; }
-        public bool specCase = false; 
-        public bool sin { get; private set; }
+        public bool specCase = false;
+        public bool sinPos;
+        public bool cosPos;
 
         public Trig(decimal x, string funct) : base(x)
         {
             Funct = funct;
-            if (x > 2*pi) { x = reductionForm(x); }
-            if (x > pi) { x = pi - x; this.sin = false; }
-            else { this.sin = true; }
-            List<decimal> specAngles = new List<decimal> { 0m, pi/6, pi/3, pi/2, pi*4/3, pi*3/2, pi*5/3, 2*pi };
+            x = reductionForm(x);
+            List<decimal> specAngles = new List<decimal> { 0m, pi/3, pi/2, pi*2/3, pi, pi*4/3, pi*3/2, pi*5/3, 2*pi };
             if (specAngles.Contains(x)) { specCase = true; }
 
             try
@@ -63,8 +62,9 @@ namespace WpfApp6
                 if (specCase == true)
                 {
                     decimal[] sinSpecCase = { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 };
-                    int i = Convert.ToInt32((theta / pi) * 12);
-                    return sinSpecCase[i];
+                    int i = Convert.ToInt32((theta / pi) * 6);
+                    if (sinPos) { return sinSpecCase[i]; }
+                    return -sinSpecCase[i];
                 }
                 int len = 50;
                 decimal[] lsSinRes = new decimal[len];
@@ -85,7 +85,8 @@ namespace WpfApp6
                         prevR = Res;
                     }
                 }
-                return Res;
+                if (sinPos) { return Res; }
+                return -Res;
             }
 
             decimal cos(decimal theta)
@@ -93,8 +94,9 @@ namespace WpfApp6
                 if (specCase == true)
                 {
                     decimal[] cosSpecCase = { 1m, 0m, rt3 / 2, rt2 / 2, 1/2, 0m, 0m };
-                    int i = Convert.ToInt32((theta / pi) * 12);
-                    return cosSpecCase[i];
+                    int i = Convert.ToInt32((theta / pi) * 6);
+                    if (cosPos) { return cosSpecCase[i]; }
+                    return -cosSpecCase[i];
                 }
                 int len = 50;
                 decimal Res = 1;
@@ -115,7 +117,17 @@ namespace WpfApp6
                         prevR = Res;
                     }
                 }
-                return Res;
+                if (cosPos) { return Res; }
+                return -Res;
+            }
+
+            decimal reductionForm(decimal theta)
+            {
+                if (theta > 2 * pi) { theta = theta % 2 * pi; }
+                sinPos = (theta < pi) ? true : false;
+                cosPos = (theta < pi / 2 || theta > pi * 3 / 4) ? true : false;
+                theta = theta % pi;
+                return theta;
             }
         }
     }
