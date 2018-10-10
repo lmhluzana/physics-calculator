@@ -4,28 +4,23 @@ using System.Windows;
 
 namespace WpfApp6
 {
-    public class Function : Sci_Calculator
+    public class IFunction : Sci_Calculator
     {
         public decimal X { get; set; }
         public decimal Res { get; set; }
-
-        public Function(decimal x)
-        {
-            X = x;
-        }
     }
 
-    public class Trig : Function
+    public class Trig : IFunction
     {
         public string Funct { get; private set; }
         public bool specCase = false;
         public bool sinPos;
         public bool cosPos;
 
-        public Trig(decimal x, string funct) : base(x)
+        public Trig(decimal x, string funct)
         {
             Funct = funct;
-            x = reductionForm(x);
+            X = reductionForm(x);
             List<decimal> specAngles = new List<decimal> { 0m, pi/3, pi/2, pi*2/3, pi, pi*4/3, pi*3/2, pi*5/3, 2*pi };
             if (specAngles.Contains(x)) { specCase = true; }
 
@@ -244,14 +239,58 @@ namespace WpfApp6
     //    {
     //    }
     //}
+    
+    public class NatLogarithm : IFunction
+    {
+        public NatLogarithm(decimal n)
+        {
+            X = n;
+            decimal[] lns = { 0m,
+                0.693147180559945309417232121458m,
+                1.09861228866810969139524523692m,
+                1.38629436111989061883446424292m,
+                1.60943791243410037460075933323m,
+                1.79175946922805500081247735838m,
+                1.94591014905531330510535274344m,
+                2.07944154167983592825169636437m,
+                2.19722457733621938279049047384m,
+                2.30258509299404568401799145468m };
+            decimal ln2 = lns[1];
+
+            ulong exp = 0;
+            decimal temp = n;
+            while (temp > 2) { temp = temp / 2; exp++; }
+            n = temp;
+
+            int intN = (int)n;
+            if ( (decimal)intN == n) { Res = lns[intN - 1]; }
+            else
+            {
+                Res = n - 1;
+                Exponent sign;
+                Exponent expN;
+                decimal prevR = 0;
+
+                for (int i = 2; i < 50; i++)
+                {
+                    sign = new Exponent(-1, i - 1);
+                    expN = new Exponent(n - 1, i);
+                    Res = Res + (sign.Res * expN.Res) / i;
+                    if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
+                    prevR = Res;
+                }
+            }
+            Res = exp * ln2 + Res;
+        }
+    }
 
     public class Logarithm : NatLogarithm
     {
-        public decimal b;
-        //public NatLogarithm logB;
-        //public NatLogarithm logX;
+        public decimal B;
+
         public Logarithm(decimal b, decimal n) : base(n)
         {
+            B = b;
             long count = 0;
             decimal tempN = n;
             decimal tempB = b;
@@ -280,8 +319,7 @@ namespace WpfApp6
                     //else { Res = logX.Res / logB.Res; }
                     else
                     {
-                        this.b = (new NatLogarithm(b)).Res;
-
+                        b = (new NatLogarithm(b)).Res;
                         if (pos) { Res = n / b; }
                         else { Res = -n / b; }
                     }
@@ -291,55 +329,15 @@ namespace WpfApp6
         }
     }
 
-    public class NatLogarithm : Function
-    {
-        public NatLogarithm(decimal n) : base(n)
-        {
-            decimal[] lns = { 0m,
-                0.693147180559945309417232121458m,
-                1.09861228866810969139524523692m,
-                1.38629436111989061883446424292m,
-                1.60943791243410037460075933323m,
-                1.79175946922805500081247735838m,
-                1.94591014905531330510535274344m,
-                2.07944154167983592825169636437m,
-                2.19722457733621938279049047384m,
-                2.30258509299404568401799145468m };
-            decimal ln2 = lns[1];
-
-            ulong exp = 0;
-            decimal temp = n;
-
-            while (temp > 2) { temp = temp / 2; exp++; }
-            n = temp;
-            int intN = (int)n;
-            if ( (decimal)intN == n) { Res = lns[intN - 1]; }
-            else
-            {
-                Res = n - 1;
-                Exponent sign;
-                Exponent expN;
-                decimal prevR = 0;
-
-                for (int i = 2; i < 50; i++)
-                {
-                    sign = new Exponent(-1, i - 1);
-                    expN = new Exponent(n - 1, i);
-                    Res = Res + (sign.Res * expN.Res) / i;
-                    if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
-                    prevR = Res;
-                }
-            }
-            Res = exp * ln2 + Res;
-        }
-    }
-
-    public class Exponent : Function
+    public class Exponent : IFunction
     {
         int intX, intP;
+        public decimal P;
 
-        public Exponent(decimal x, decimal p) : base(x)
+        public Exponent(decimal x, decimal p)
         {
+            X = x;
+            P = p;
             intX = (int)x;
             intP = (int)p;
             if (intX == x && intP == p) { Res = intExponent(intX, intP); }
@@ -356,10 +354,16 @@ namespace WpfApp6
             {
                 if (p >= 1)
                 {
-                    for (int b = 0; b < p; b++)
+                    long exp = 0;
+                    decimal temp = p;
+                    while (temp > 1) { temp = temp / 2; exp++; }
+                    p = temp;
+                    for (int n = 0; n < exp; n++)
                     {
-                        Res = Res * x;
+                        x = x * x;
                     }
+                    if ( p != 0 ) { Res = dcExponent(x, p); }
+                    else { Res = x; }
                 }
                 else if (p > 0)
                 {
