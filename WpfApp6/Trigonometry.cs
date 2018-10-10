@@ -29,53 +29,63 @@ namespace WpfApp6
                 switch (Funct)
                 {
                     case "sin":
-                        Res = sin(x); break;
+                        Res = sin(X); break;
                     case ("cos"):
-                        Res = cos(x); break;
+                        Res = cos(X); break;
                     case ("tan"):
-                        Res = sin(x) / cos(x); break;
+                        if (X == pi/2 || X == pi*3/2) throw new InvalidOperationException("tan limit");
+                        Res = sin(X) / cos(X); break;
                     case ("arcsin"):
+                        if (X > 1m) throw new InvalidOperationException("arcsin limit");
                         Res = arcsin(x); break;
                     case ("arccos"):
-                        Res = arccos(x); break;
+                        if (X > 1m) throw new InvalidOperationException("arccos limit");
+                        Res = arccos(X); break;
                     case ("arctan"):
-                        Res = arcsin(x) / arccos(x); break;
+                        Res = arcsin(X) / arccos(X); break;
                     case ("cosec"):
-                        Res = 1 / sin(x); break;
+                        Res = 1 / sin(X); break;
                     case ("sec"):
-                        Res = 1 / cos(x); break;
+                        Res = 1 / cos(X); break;
                     case ("cot"):
-                        Res = cos(x) / sin(x); break;
+                        Res = cos(X) / sin(X); break;
                     default:
-                        throw new System.InvalidOperationException();
+                        throw new InvalidOperationException("no funct");
                 }
             }
-            catch (System.InvalidOperationException) { MessageBox.Show("No function recognised", "Maths Error"); }
+            catch (InvalidOperationException ex )
+            {
+                if (ex.Message == "no funct") { MessageBox.Show("No function recognised", "Maths Error"); }
+                else if (ex.Message == "arcsin limit") { MessageBox.Show($"arcsinx is not defined for x = {x}", "Trigonometry Error"); }
+                else if (ex.Message == "arccos limit") { MessageBox.Show($"arccosx is not defined for x = {x}", "Trigonometry Error"); }
+                else { MessageBox.Show($"tanx is not defined for x = {x}", "Trigonometry Error"); }
+            }
 
             decimal sin(decimal theta)
             {
                 if (specCase == true)
                 {
-                    decimal[] sinSpecCase = { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 };
-                    int i = Convert.ToInt32((theta / pi) * 6);
+                    decimal[] sinSpecCase = { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1, 0m, rt3/2, rt2/2, 1/2, 0m, 0m };
+                    int i = Convert.ToInt32((theta / pi) * 11);
                     if (sinPos) { return sinSpecCase[i]; }
                     return -sinSpecCase[i];
                 }
-                int len = 50;
+                int len = 29;
                 decimal Res = theta;
                 decimal prevR = 0;
                 int[] exp = new int[len];
+                int I = 1;
                 Exponent sign;
                 Exponent t;
                 
-                for (int n = 0; n < len; n++)
+                for (int n = 2; n < len; n++)
                 {
                     if (n % 2 == 1)
                     {
-                        sign = new Exponent(-1, n);
+                        sign = new Exponent(-1, I++);
                         t = new Exponent(theta, n);
                         Res += sign.Res * t.Res / (decimal)factorial(n);
-                        if (Res - prevR < 0.00000000000000000000000001m) { break; }
+                        if (Absolute(Res - prevR) < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
                 }
@@ -87,12 +97,12 @@ namespace WpfApp6
             {
                 if (specCase == true)
                 {
-                    decimal[] cosSpecCase = { 1m, 0m, rt3 / 2, rt2 / 2, 1/2, 0m, 0m };
-                    int i = Convert.ToInt32((theta / pi) * 6);
+                    decimal[] cosSpecCase = { 1m, 0m, rt3 / 2, rt2 / 2, 1/2, 0m, 0m, 0m, 1/2, rt2/2, rt3/2, 1 };
+                    int i = Convert.ToInt32((theta / pi) * 11);
                     if (cosPos) { return cosSpecCase[i]; }
                     return -cosSpecCase[i];
                 }
-                int len = 50;
+                int len = 100;
                 decimal Res = 1;
                 decimal prevR = 0;
                 int[] exp = new int[len];
@@ -107,7 +117,7 @@ namespace WpfApp6
                         t = new Exponent(theta, n);
 
                         Res += sign.Res * t.Res / (decimal)factorial(n);
-                        if (Res - prevR < 0.00000000000000000000000001m) { break; }
+                        if (Absolute(Res - prevR) < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
                 }
@@ -129,7 +139,7 @@ namespace WpfApp6
                         }
                     }
                 }
-                int len = 50;
+                int len = 100;
                 decimal Res = theta;
                 decimal prevR = 0;
                 int[] exp = new int[len];
@@ -143,7 +153,7 @@ namespace WpfApp6
                         t = new Exponent(theta, n);
                         bin = new Exponent(2, n - 1);
                         Res += t.Res / (decimal)(bin.Res * (n + 1));
-                        if (Res - prevR < 0.00000000000000000000000001m) { break; }
+                        if (Absolute(Res - prevR) < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
                 }
@@ -179,7 +189,7 @@ namespace WpfApp6
 
             decimal reductionForm(decimal theta)
             {
-                if (theta > 2 * pi) { theta = theta % 2 * pi; }
+                if (theta > 2 * pi) { theta = theta % (2 * pi); }
                 sinPos = (theta < pi) ? true : false;
                 cosPos = (theta < pi / 2 || theta > pi * 3 / 4) ? true : false;
                 theta = theta % pi;
@@ -352,7 +362,7 @@ namespace WpfApp6
             Exponent xPrevN;
             try
             {
-                if (p >= 1)
+                if (p > 1)
                 {
                     long exp = 0;
                     decimal temp = p;
@@ -365,6 +375,7 @@ namespace WpfApp6
                     if ( p != 0 ) { Res = dcExponent(x, p); }
                     else { Res = x; }
                 }
+                else if (p == 1m) { Res = x; }
                 else if (p > 0)
                 {
                     if ((1/p) % 2 == 0 && 1 / p > 2)
