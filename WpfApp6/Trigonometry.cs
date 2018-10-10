@@ -40,17 +40,17 @@ namespace WpfApp6
                     case ("tan"):
                         Res = sin(x) / cos(x); break;
                     case ("arcsin"):
-                        Res = 1 / sin(x); break;
+                        Res = arcsin(x); break;
                     case ("arccos"):
-                        Res = 1 / cos(x); break;
+                        Res = arccos(x); break;
                     case ("arctan"):
-                        Res = cos(x) / sin(x); break;
+                        Res = arcsin(x) / arccos(x); break;
                     case ("cosec"):
-                        break;
+                        Res = 1 / sin(x); break;
                     case ("sec"):
-                        break;
+                        Res = 1 / cos(x); break;
                     case ("cot"):
-                        break;
+                        Res = cos(x) / sin(x); break;
                     default:
                         throw new System.InvalidOperationException();
                 }
@@ -67,7 +67,6 @@ namespace WpfApp6
                     return -sinSpecCase[i];
                 }
                 int len = 50;
-                decimal[] lsSinRes = new decimal[len];
                 decimal Res = theta;
                 decimal prevR = 0;
                 int[] exp = new int[len];
@@ -119,6 +118,68 @@ namespace WpfApp6
                 }
                 if (cosPos) { return Res; }
                 return -Res;
+            }
+
+            decimal arcsin(decimal theta)
+            {
+                List<decimal> arcsinSpecCase = new List<decimal> { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 };
+                if (arcsinSpecCase.Contains(theta))
+                {
+                    foreach (decimal y in specAngles)
+                    {
+                        if (theta == sin(y))
+                        {
+                            if (sinPos) { return y; }
+                            return -y;
+                        }
+                    }
+                }
+                int len = 50;
+                decimal Res = theta;
+                decimal prevR = 0;
+                int[] exp = new int[len];
+                Exponent t;
+                Exponent bin;
+
+                for (int n = 3; n < len; n++)
+                {
+                    if (n % 2 == 1)
+                    {
+                        t = new Exponent(theta, n);
+                        bin = new Exponent(2, n - 1);
+                        Res += t.Res / (decimal)(bin.Res * (n + 1));
+                        if (Res - prevR < 0.00000000000000000000000001m) { break; }
+                        prevR = Res;
+                    }
+                }
+                if (sinPos) { return Res; }
+                return -Res;
+            }
+
+            decimal arccos(decimal theta)
+            {
+                List<decimal> arccosSpecCase = new List<decimal> { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 };
+                Trig cosComp;
+                Decimal res = 0m;
+                try
+                {
+                    if (arccosSpecCase.Contains(theta))
+                    {
+                        foreach (decimal y in specAngles)
+                        {
+                            cosComp = new Trig(y, "cos");
+                            if (theta == cosComp.Res)
+                            {
+                                if (sinPos) { res = y; }
+                                res = -y;
+                            }
+                            else { throw new Exception(); }
+                        }
+                    }
+                else { res = pi / 2 - arcsin(theta); }
+                }
+                catch { MessageBox.Show("The program experienced a computational error, please retry", "Computational Error"); }
+                return res;
             }
 
             decimal reductionForm(decimal theta)
