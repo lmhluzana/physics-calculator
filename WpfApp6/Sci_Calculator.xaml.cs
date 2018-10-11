@@ -310,62 +310,61 @@ namespace WpfApp6
             //Tester.TestEq(log.Res, decimal.MinValue);
             //log = new Logarithm(0.1m, 1000m);
             //Tester.TestEq(log.Res, -3m);
-            // Exponent Tests
-            Exponent xObj = new Exponent(1, 1);
-            Tester.TestEq(xObj.Res, 1m);
-            xObj = new Exponent(1, 0);
-            Tester.TestEq(xObj.Res, 1m);
-            xObj = new Exponent(0, 1);
-            Tester.TestEq(xObj.Res, 0m);
-            xObj = new Exponent(0.5m, 1m);
-            Tester.TestEq(xObj.Res, 0.5m);
-            xObj = new Exponent(0.9m, 0m);
-            Tester.TestEq(xObj.Res, 1m);
-            xObj = new Exponent(0.5m, 2m);
-            Tester.TestEq(xObj.Res, 0.25m);
-            xObj = new Exponent(2.000192m, 3.49103m);
-            Tester.TestEq(xObj.Res, 11.24735202m);
-            xObj = new Exponent(45.2m, 0.93m);
-            Tester.TestEq(xObj.Res, 34.61614843m);
-            // Roots
+            //// Exponent Tests
+            //Exponent xObj = new Exponent(1, 1);
+            //Tester.TestEq(xObj.Res, 1m);
+            //xObj = new Exponent(1, 0);
+            //Tester.TestEq(xObj.Res, 1m);
+            //xObj = new Exponent(0, 1);
+            //Tester.TestEq(xObj.Res, 0m);
+            //xObj = new Exponent(0.5m, 1m);
+            //Tester.TestEq(xObj.Res, 0.5m);
+            //xObj = new Exponent(0.9m, 0m);
+            //Tester.TestEq(xObj.Res, 1m);
+            //xObj = new Exponent(0.5m, 2m);
+            //Tester.TestEq(xObj.Res, 0.25m);
+            //xObj = new Exponent(2.000192m, 3.49103m);
+            //Tester.TestEq(xObj.Res, 11.247352015494290301819749191m);
+            //xObj = new Exponent(45.2m, 0.93m);
+            //Tester.TestEq(xObj.Res, 34.616148428081337568825601242m);
+            //// Roots
             //xObj = new Exponent(16m, 1 / 2m);
             //Tester.TestEq(xObj.Res, 4m);
             //xObj = new Exponent(9m, 1 / 2m);
-            //Tester.TestEq(xObj.Res, 3m);
-            //xObj = new Exponent(27m, 1 / 3m);
+            //Tester.TestEq(xObj.Res, 3m); //All Working
+            //xObj = new Exponent(27m, 1 / 3m); // Last few almost correct but slighty off (factorial limit)
             //Tester.TestEq(xObj.Res, 3m);
             //xObj = new Exponent(64m, 1 / 3m);
             //Tester.TestEq(xObj.Res, 4m);
             //xObj = new Exponent(1000m, 1 / 3m);
             //Tester.TestEq(xObj.Res, 10m);
             //xObj = new Exponent(16m, 1 / 4m);
-            //Tester.TestEq(xObj.Res, 2m);  
-            //All Working
+            //Tester.TestEq(xObj.Res, 2m);
 
-            //// Sin tests
-            //Trig trigObj = new Trig(0, "sin");
-            //Tester.TestEq(trigObj.Res, 0m);
-            //trigObj = new Trig(pi / 2, "sin");
-            //Tester.TestEq(trigObj.Res, 1m);
-            //trigObj = new Trig(pi, "sin");
-            //Tester.TestEq(trigObj.Res, 0m);
+            // Sin tests
+            Trig trigObj = new Trig(0, "sin");
+            Tester.TestEq(trigObj.Res, 0m);
+            trigObj = new Trig(pi / 2, "sin");
+            Tester.TestEq(trigObj.Res, 1m);
+            trigObj = new Trig(pi, "sin");
+            Tester.TestEq(trigObj.Res, 0m);
 
-            //trigObj = new Trig(3m, "sin");
-            //Tester.TestEq(trigObj.Res, 0.1411200080598672144131561754m);
-            //trigObj = new Trig(50m, "sin");
-            //Tester.TestEq(trigObj.Res, -0.2623748537m);
+            trigObj = new Trig(3m, "sin");
+            Tester.TestEq(trigObj.Res, 0.1411200080598672144131561754m);
+            trigObj = new Trig(50m, "sin");
+            Tester.TestEq(trigObj.Res, -0.2622325935526241477021786645m);
 
-            ////Cos tests
-            //Trig cosObj = new Trig(0, "cos");
-            //Tester.TestEq(cosObj.Res, 1m);
-            //cosObj = new Trig(pi / 2, "cos");
-            //Tester.TestEq(cosObj.Res, 0m);
-            ////cosObj = new Trig(pi, "cos");
-            ////Tester.TestEq(cosObj.Res, -1m);
-            //cosObj = new Trig(36m, "cos");
-            //Tester.TestEq(cosObj.Res, -0.1279636896m);
-            //cosObj = new Trig(77.9m, "cos");
-            //Tester.TestEq(cosObj.Res, -0.8022054254m);
+            //Cos tests
+            Trig cosObj = new Trig(0, "cos");
+            Tester.TestEq(cosObj.Res, 1m);
+            cosObj = new Trig(pi / 2, "cos");
+            Tester.TestEq(cosObj.Res, 0m);
+            cosObj = new Trig(pi, "cos");
+            Tester.TestEq(cosObj.Res, -1m);
+            cosObj = new Trig(36m, "cos");
+            Tester.TestEq(cosObj.Res, -0.1279636896m);
+            cosObj = new Trig(77.9m, "cos");
+            Tester.TestEq(cosObj.Res, -0.8022054254m);
 
             //// Tan Tests
             //Trig tanObj = new Trig(0, "tan");

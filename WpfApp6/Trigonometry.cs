@@ -102,7 +102,7 @@ namespace WpfApp6
                     if (cosPos) { return cosSpecCase[i]; }
                     return -cosSpecCase[i];
                 }
-                int len = 100;
+                int len = 28;
                 decimal Res = 1;
                 decimal prevR = 0;
                 int[] exp = new int[len];
@@ -191,64 +191,12 @@ namespace WpfApp6
             {
                 if (theta > 2 * pi) { theta = theta % (2 * pi); }
                 sinPos = (theta < pi) ? true : false;
-                cosPos = (theta < pi / 2 || theta > pi * 3 / 4) ? true : false;
+                cosPos = (((theta > pi/2) && (theta <= pi)) || (theta >= pi * 3/4)) ? true : false;
                 theta = theta % pi;
                 return theta;
             }
         }
     }
-
-    //public class Sin : Trigonometry
-    //{
-    //    public Sin(decimal x, string funct)
-    //    {
-    //        if (specCase == true)
-    //        {
-    //            decimal[] sinSpecCase = { 0m, 0.5m, rt2 / 2, rt3 / 2, 1 };
-    //            int i = Convert.ToInt32((theta / pi) * 4);
-    //            return Convert.ToDouble(sinSpecCase[i]);
-    //        }
-    //        int len = 50;
-    //        int n;
-    //        decimal[] lsSinRes = new decimal[len];
-    //        double dbSinRes = 0;
-    //        double prevR = 0;
-    //        int[] exp = new int[len];
-    //        for (int num = 0; num < len; num++) { exp[num] = 2 * num + 1; };
-    //        foreach (int x in exp)
-    //        {
-    //            n = x / 2;
-    //            dbSinRes += exponent(-1, n) * exponent(theta, x) / factorial(x);
-    //            if (dbSinRes == prevR) { break; }
-    //            prevR = dbSinRes;
-    //        }
-    //        //dbSinRes += Convert.ToDouble(lsSinRes.Sum());
-    //        res = dbSinRes;
-    //    }
-    //}
-    //public class Cos : Trigonometry
-    //{
-    //    public Cos(decimal x) : base(x)
-    //    {
-    //        int len = 50;
-    //        int n;
-    //        double cosRes = 0;
-    //        int[] exp = new int[len];
-    //        for (int num = 0; num < len; num++) { exp[num] = 2 * num; };
-    //        foreach (int x in exp)
-    //        {
-    //            n = x / 2;
-    //            cosRes += exponent(-1, n) * exponent(theta, x) / factorial(x);
-    //        }
-    //        res = cosRes;
-    //    }
-    //}
-    //public class Tan : Trigonometry
-    //{
-    //    public Tan(decimal theta) : base(x)
-    //    {
-    //    }
-    //}
     
     public class NatLogarithm : IFunction
     {
@@ -281,7 +229,6 @@ namespace WpfApp6
                 {
                     Res = n - 1;
                     Exponent sign;
-                    Exponent expN;
                     decimal prevR = 0,
                             XN = n - 1,
                             XN0 = XN;
@@ -363,13 +310,12 @@ namespace WpfApp6
 
         public decimal dcExponent(decimal x, decimal p)
         {
-
             if (X == 0) { return 0; }
             else
             {
+                decimal res = 1;
                 bool pos = (p >= 0) ? true : false;
                 p = Absolute(p);
-                Res = 1;
 
                 try
                 {
@@ -383,18 +329,19 @@ namespace WpfApp6
                         {
                             x = x * x;
                         }
-                        if (p != 1) { Res = dcExponent(x, p); }
-                        else { Res = x; }
+                        if (p != 1) { res = dcExponent(x, p); }
+                        else { res = x; }
                     }
-                    else if (p == 1m) { Res = x; }
+                    else if (p == 1m) { res = x; }
                     else if (p > 0)
                     {
-                        decimal Res = 0;
+                        res = 0;
+                        decimal tempX = x;
                         if ((1 / p) % 2 == 0 && 1 / p > 2)
                         {
-                            Res = x;
                             decimal compP = 1 / p / 2;
-                            for (int i = 0; i < compP; i++) { Res = dcExponent(Res, 1 / 2m); }
+                            for (int i = 0; i < compP; i++) { tempX = dcExponent(tempX, 1 / 2m); }
+                            res = tempX;
                         }
                         else
                         {
@@ -407,19 +354,19 @@ namespace WpfApp6
                             for (int n = 1; n < 28; n++)
                             {
                                 y = y * y0;
-                                Res = prevR + y / (decimal)factorial(n);
-                                if (Absolute(Res - prevR) < 0.0000000000000000000000000001m)
+                                res = prevR + y / (decimal)factorial(n);
+                                if (Absolute(res - prevR) < 0.0000000000000000000000000001m)
                                 {
                                     break;
                                 }
-                                prevR = Res;
+                                prevR = res;
                             }
                         }
                     }
                     else { return 1m; }
 
-                    if (pos) { return Res; }
-                    else { return 1 / Res; }
+                    if (pos) { return res; }
+                    else { return 1 / res; }
                 }
                 catch (Exception ex) { MessageBox.Show("Maths Error" + ex.ToString(), "Error"); }
                 return 0;
