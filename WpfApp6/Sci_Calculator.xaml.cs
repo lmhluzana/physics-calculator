@@ -31,6 +31,13 @@ namespace WpfApp6
         public decimal rt3 = 1.732050807568877293527446341505872366942805253810380628055m;
         public bool rad = true;
 
+        Dictionary<string, string> btns = new Dictionary<string, string>() {
+            { "1/()", "inv" },
+            {"()^2", "sqr" },
+            { "()^3", "cub" },
+            { "()^()", "exp" },
+            { },
+        };
 
         /// <summary>
         /// Factorial Function
@@ -394,10 +401,126 @@ namespace WpfApp6
             //Tester.TestEq(factorial(1), 1);
             //Tester.TestEq(factorial(4), 24);
         }
+        
 
-        private void btnClear_Click(object sender, RoutedEventArgs e)
+        private void btnInv_Click(object sender, RoutedEventArgs e)
         {
-            txtInp.Clear();
+            txtInp.Text += "1/()";
+        }
+
+        private void btnSquare_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "()^2";
+        }
+
+        private void btnCube_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "()^3";
+        }
+
+        private void btnExponent_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "()^()";
+        }
+
+        private void tnSqrRoot_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "√()";
+        }
+
+        private void btnCbRoot_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "3√()";
+        }
+
+        private void btnRoot_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "()√()";
+        }
+
+        private void btnFact_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "()!";
+        }
+
+        private void btnLogTen_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "log()";
+        }
+
+        private void btnLn_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "ln()";
+        }
+
+        private void btnLog_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "log()()";
+        }
+
+        private void btnEuler_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "e";
+        }
+
+        private void tnSin_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "sin()";
+        }
+
+        private void btnCos_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "cos()";
+        }
+
+        private void btnTan_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "tan()";
+        }
+
+        private void btnPi_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "π";
+        }
+
+        private void btnCosec_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "cosec()";
+        }
+
+        private void btnSec_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "sec()";
+        }
+
+        private void btnCot_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "cot()";
+        }
+
+        private void btnArcsin_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "arcsin()";
+        }
+
+        private void btnArccos_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "arccos()";
+        }
+
+        private void btnArctan_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "arctan()";
+        }
+
+        private void btnPercent_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "()%";
+        }
+
+        private void btnBracket_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "()";
         }
 
         private void btnDegRad_Click(object sender, RoutedEventArgs e)
@@ -405,6 +528,31 @@ namespace WpfApp6
             rad = !(rad);
             if (btnDegRad.Content.ToString() == "RAD") { btnDegRad.Content = "DEG"; }
             else { btnDegRad.Content = "RAD"; }
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Clear();
+        }
+
+        private void btnPlus_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += " + ";
+        }
+
+        private void btnMinus_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += " - ";
+        }
+
+        private void btnTimes_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += " x ";
+        }
+
+        private void btnDivide_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += " / ";
         }
     }
 }

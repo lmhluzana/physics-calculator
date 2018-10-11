@@ -12,16 +12,16 @@
         <Label x:Name="lblRes" Content="= Res" HorizontalAlignment="Left" Margin="547,41,0,0" VerticalAlignment="Top" Width="226" Height="30"/>
         <Button x:Name="btnEquals" Content="=" HorizontalAlignment="Left" Margin="707,244,0,0" VerticalAlignment="Top" Width="75" Height="151" FontSize="48"/>
         <Button x:Name="btnBack" HorizontalAlignment="Left" Margin="707,192,0,0" VerticalAlignment="Top" Width="74" Height="47" RenderTransformOrigin="0.533,0.489" Content="&lt;X" FontSize="16"/>
-        <Button x:Name="btnDivide" Content="/" HorizontalAlignment="Left" Margin="707,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
-        <Button x:Name="btnBracket" HorizontalAlignment="Left" Margin="547,88,0,0" VerticalAlignment="Top" Width="75" Height="47" RenderTransformOrigin="0.88,2.521" Content="(  )" FontSize="18"/>
+        <Button x:Name="btnDivide" Content="/" HorizontalAlignment="Left" Margin="707,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18" Click="btnDivide_Click"/>
+        <Button x:Name="btnBracket" HorizontalAlignment="Left" Margin="547,88,0,0" VerticalAlignment="Top" Width="75" Height="47" RenderTransformOrigin="0.88,2.521" Content="(  )" FontSize="18" Click="btnBracket_Click"/>
         <Button x:Name="btnThree" Content="3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="627,192,0,0" FontSize="18"/>
         <Button x:Name="btnNine" Content="9" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="627,296,0,0" FontSize="18"/>
         <Button x:Name="btnSix" Content="6" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="627,244,0,0" FontSize="18"/>
         <Button x:Name="btnClear" HorizontalAlignment="Left" Margin="707,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Content="CLEAR" Click="btnClear_Click"/>
-        <Button x:Name="btnTimes" Content="x" HorizontalAlignment="Left" Margin="627,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
+        <Button x:Name="btnTimes" Content="x" HorizontalAlignment="Left" Margin="627,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18" Click="btnTimes_Click"/>
         <Button x:Name="btnZero" Content="0" HorizontalAlignment="Left" Margin="547,348,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
         <Button x:Name="btnDegRad" Content="RAD" HorizontalAlignment="Left" Margin="627,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnDegRad_Click"/>
-        <Button x:Name="btnMinus" Content="-" HorizontalAlignment="Left" Margin="547,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="20"/>
+        <Button x:Name="btnMinus" Content="-" HorizontalAlignment="Left" Margin="547,140,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="20" Click="btnMinus_Click"/>
         <Button x:Name="btnDecimal" Content="," HorizontalAlignment="Left" Margin="627,348,0,0" VerticalAlignment="Top" Width="74" Height="47" FontSize="20"/>
         <Button x:Name="btnTwo" Content="2" HorizontalAlignment="Left" Margin="547,192,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
         <Button x:Name="btnFive" Content="5" HorizontalAlignment="Left" Margin="547,244,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
@@ -30,33 +30,33 @@
         <Button x:Name="btnFour" Content="4" HorizontalAlignment="Left" Margin="466,244,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="18"/>
         <Button x:Name="btnSeven" Content="7" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="466,297,0,0" FontSize="18"/>
         <Button x:Name="btnHome" Content="&lt;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="61" FontSize="40"/>
-        <Button x:Name="btnPi" Content="pi" HorizontalAlignment="Left" Margin="386,244,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnPercent" Content="%" HorizontalAlignment="Left" Margin="466,88,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="16"/>
-        <Button x:Name="btnPlus" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="465,140,0,0" FontSize="18"/>
-        <Button x:Name="btnArcsin" Content="arcsin x" HorizontalAlignment="Left" Margin="146,348,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnExponent" Content="x^a" HorizontalAlignment="Left" Margin="386,88,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnFact" Content="x!" HorizontalAlignment="Left" Margin="386,140,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnEuler" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="386,192,0,0" Content="e"/>
-        <Button x:Name="btnOrder" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="467,348,0,0" Content="x10^a"/>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="386,296,0,0"/>
-        <Button x:Name="btnArccos" Content="arccos x" HorizontalAlignment="Left" Margin="226,348,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnCube" Content="x^3" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnRoot" Content="a/x" HorizontalAlignment="Left" Margin="306,140,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnLog" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="306,192,0,0" Content="log(a) x"/>
-        <Button x:Name="btnTan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="306,244,0,0" Content="tan x"/>
-        <Button x:Name="btnCot" Content="cot x" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="306,296,0,0"/>
-        <Button x:Name="btnArctan" Content="arctan x" HorizontalAlignment="Left" Margin="306,348,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnSquare" Content="x^2" HorizontalAlignment="Left" Margin="226,88,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnCbRoot" Content="3/x" HorizontalAlignment="Left" Margin="226,140,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnLn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="226,192,0,0" Content="ln x"/>
-        <Button x:Name="btnCos" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="226,244,0,0" Content="cos x"/>
-        <Button x:Name="btnSec" Content="sec x" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="226,296,0,0"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="386,348,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnInv" Content="1/x" HorizontalAlignment="Left" Margin="146,88,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="tnSqrRoot" Content="/x" HorizontalAlignment="Left" Margin="146,140,0,0" VerticalAlignment="Top" Width="75" Height="47"/>
-        <Button x:Name="btnLogTen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="146,192,0,0" Content="log x"/>
-        <Button x:Name="tnSin" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="146,244,0,0" Content="sin x"/>
-        <Button x:Name="btnCosec" Content="cosec x" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="146,296,0,0"/>
+        <Button x:Name="btnPi" Content="π" HorizontalAlignment="Left" Margin="386,244,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnPi_Click" FontStyle="Italic"/>
+        <Button x:Name="btnPercent" Content="%" HorizontalAlignment="Left" Margin="466,88,0,0" VerticalAlignment="Top" Width="75" Height="47" FontSize="16" FontStyle="Italic" Click="btnPercent_Click"/>
+        <Button x:Name="btnPlus" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="465,140,0,0" FontSize="18" Click="btnPlus_Click"/>
+        <Button x:Name="btnArcsin" Content="arcsin x" HorizontalAlignment="Left" Margin="146,348,0,0" VerticalAlignment="Top" Width="75" Height="47" FontStyle="Italic" Click="btnArcsin_Click"/>
+        <Button x:Name="btnExponent" Content="x^a" HorizontalAlignment="Left" Margin="386,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnExponent_Click" FontStyle="Italic"/>
+        <Button x:Name="btnFact" Content="x!" HorizontalAlignment="Left" Margin="386,140,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnFact_Click" FontStyle="Italic"/>
+        <Button x:Name="btnEuler" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="386,192,0,0" Content="e" Click="btnEuler_Click" FontStyle="Italic"/>
+        <Button x:Name="btnOrder" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="467,348,0,0" Content="x10^a" FontStyle="Italic"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="386,296,0,0" FontStyle="Italic"/>
+        <Button x:Name="btnArccos" Content="arccos x" HorizontalAlignment="Left" Margin="226,348,0,0" VerticalAlignment="Top" Width="75" Height="47" FontStyle="Italic" Click="btnArccos_Click"/>
+        <Button x:Name="btnCube" Content="x^3" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnCube_Click" FontStyle="Italic"/>
+        <Button x:Name="btnRoot" Content="a√x" HorizontalAlignment="Left" Margin="306,140,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnRoot_Click" FontStyle="Italic"/>
+        <Button x:Name="btnLog" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="306,192,0,0" Content="loga X" Click="btnLog_Click" FontStyle="Italic"/>
+        <Button x:Name="btnTan" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="306,244,0,0" Content="tan x" Click="btnTan_Click" FontStyle="Italic"/>
+        <Button x:Name="btnCot" Content="cot x" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="306,296,0,0" FontStyle="Italic" Click="btnCot_Click"/>
+        <Button x:Name="btnArctan" Content="arctan x" HorizontalAlignment="Left" Margin="306,348,0,0" VerticalAlignment="Top" Width="75" Height="47" FontStyle="Italic" Click="btnArctan_Click"/>
+        <Button x:Name="btnSquare" Content="x^2" HorizontalAlignment="Left" Margin="226,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnSquare_Click" FontStyle="Italic"/>
+        <Button x:Name="btnCbRoot" Content="3√x" HorizontalAlignment="Left" Margin="226,140,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnCbRoot_Click" FontStyle="Italic"/>
+        <Button x:Name="btnLn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="226,192,0,0" Content="ln x" Click="btnLn_Click" FontStyle="Italic"/>
+        <Button x:Name="btnCos" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="226,244,0,0" Content="cos x" Click="btnCos_Click" FontStyle="Italic"/>
+        <Button x:Name="btnSec" Content="sec x" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="226,296,0,0" FontStyle="Italic" Click="btnSec_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="386,348,0,0" VerticalAlignment="Top" Width="75" Height="47" FontStyle="Italic"/>
+        <Button x:Name="btnInv" Content="1/x" HorizontalAlignment="Left" Margin="146,88,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="btnInv_Click" FontStyle="Italic"/>
+        <Button x:Name="tnSqrRoot" Content="√x" HorizontalAlignment="Left" Margin="146,140,0,0" VerticalAlignment="Top" Width="75" Height="47" Click="tnSqrRoot_Click" FontStyle="Italic"/>
+        <Button x:Name="btnLogTen" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Height="46" Margin="146,192,0,0" Content="log x" Click="btnLogTen_Click" FontStyle="Italic"/>
+        <Button x:Name="tnSin" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="48" Margin="146,244,0,0" Content="sin x" Click="tnSin_Click" FontStyle="Italic"/>
+        <Button x:Name="btnCosec" Content="cosec x" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="47" Margin="146,296,0,0" FontStyle="Italic" Click="btnCosec_Click"/>
 
     </Grid>
 </Window>
