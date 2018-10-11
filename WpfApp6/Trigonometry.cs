@@ -70,7 +70,7 @@ namespace WpfApp6
                     if (sinPos) { return sinSpecCase[i]; }
                     return -sinSpecCase[i];
                 }
-                int len = 29;
+                int len = 28;
                 decimal Res = theta;
                 decimal prevR = 0;
                 int[] exp = new int[len];
@@ -254,43 +254,50 @@ namespace WpfApp6
     {
         public NatLogarithm(decimal n)
         {
-            X = n;
-            decimal[] lns = { 0m,
-                0.693147180559945309417232121458m,
-                1.09861228866810969139524523692m,
-                1.38629436111989061883446424292m,
-                1.60943791243410037460075933323m,
-                1.79175946922805500081247735838m,
-                1.94591014905531330510535274344m,
-                2.07944154167983592825169636437m,
-                2.19722457733621938279049047384m,
-                2.30258509299404568401799145468m };
-            decimal ln2 = lns[1];
-
-            ulong exp = 0;
-            decimal temp = n;
-            while (temp > 2) { temp = temp / 2; exp++; }
-            n = temp;
-
-            int intN = (int)n;
-            if ( (decimal)intN == n) { Res = lns[intN - 1]; }
-            else
+            try
             {
-                Res = n - 1;
-                Exponent sign;
-                Exponent expN;
-                decimal prevR = 0;
+                if (n == 0) throw new InvalidOperationException();
+                X = n;
+                decimal[] lns = { 0m,
+                    0.693147180559945309417232121458m,
+                    1.09861228866810969139524523692m,
+                    1.38629436111989061883446424292m,
+                    1.60943791243410037460075933323m,
+                    1.79175946922805500081247735838m,
+                    1.94591014905531330510535274344m,
+                    2.07944154167983592825169636437m,
+                    2.19722457733621938279049047384m,
+                    2.30258509299404568401799145468m };
+                decimal ln2 = lns[1];
 
-                for (int i = 2; i < 50; i++)
+                ulong exp = 0;
+                decimal temp = n;
+                while (temp > 2) { temp = temp / 2; exp++; }
+                n = temp;
+
+                int intN = (int)n;
+                if ( (decimal)intN == n) { Res = lns[intN - 1]; }
+                else
                 {
-                    sign = new Exponent(-1, i - 1);
-                    expN = new Exponent(n - 1, i);
-                    Res = Res + (sign.Res * expN.Res) / i;
-                    if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
-                    prevR = Res;
+                    Res = n - 1;
+                    Exponent sign;
+                    Exponent expN;
+                    decimal prevR = 0,
+                            XN = n - 1,
+                            XN0 = XN;
+
+                    for (int i = 2; i < 50; i++)
+                    {
+                        sign = new Exponent(-1, i - 1);
+                        XN = XN * XN0;
+                        Res = Res + (sign.Res * XN) / i;
+                        if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
+                        prevR = Res;
+                    }
                 }
+                Res = exp * ln2 + Res;
             }
-            Res = exp * ln2 + Res;
+            catch (InvalidOperationException ex) { MessageBox.Show("Loga is not defined for a = 0." + ex.ToString(), "Logarithm Error"); }
         }
     }
 
@@ -356,51 +363,67 @@ namespace WpfApp6
 
         public decimal dcExponent(decimal x, decimal p)
         {
-            bool pos = (p >= 0) ? true : false;
-            p = Absolute(p);
-            Res = 1;
-            Exponent xPrevN;
-            try
+
+            if (X == 0) { return 0; }
+            else
             {
-                if (p > 1)
+                bool pos = (p >= 0) ? true : false;
+                p = Absolute(p);
+                Res = 1;
+
+                try
                 {
-                    long exp = 0;
-                    decimal temp = p;
-                    while (temp > 1) { temp = temp / 2; exp++; }
-                    p = temp;
-                    for (int n = 0; n < exp; n++)
+                    if (p > 1)
                     {
-                        x = x * x;
+                        long exp = 0;
+                        decimal temp = p;
+                        while (temp > 1) { temp = temp / 2; exp++; }
+                        p = temp;
+                        for (int n = 0; n < exp; n++)
+                        {
+                            x = x * x;
+                        }
+                        if (p != 1) { Res = dcExponent(x, p); }
+                        else { Res = x; }
                     }
-                    if ( p != 0 ) { Res = dcExponent(x, p); }
-                    else { Res = x; }
+                    else if (p == 1m) { Res = x; }
+                    else if (p > 0)
+                    {
+                        decimal Res = 0;
+                        if ((1 / p) % 2 == 0 && 1 / p > 2)
+                        {
+                            Res = x;
+                            decimal compP = 1 / p / 2;
+                            for (int i = 0; i < compP; i++) { Res = dcExponent(Res, 1 / 2m); }
+                        }
+                        else
+                        {
+                            NatLogarithm ln = new NatLogarithm(x);
+                            decimal y0 = ln.Res * p,
+                                    y = 1;
+                            Exponent exp;
+                            decimal prevR = 1,
+                                    expY = 1;
+                            for (int n = 1; n < 28; n++)
+                            {
+                                y = y * y0;
+                                Res = prevR + y / (decimal)factorial(n);
+                                if (Absolute(Res - prevR) < 0.0000000000000000000000000001m)
+                                {
+                                    break;
+                                }
+                                prevR = Res;
+                            }
+                        }
+                    }
+                    else { return 1m; }
+
+                    if (pos) { return Res; }
+                    else { return 1 / Res; }
                 }
-                else if (p == 1m) { Res = x; }
-                else if (p > 0)
-                {
-                    if ((1/p) % 2 == 0 && 1 / p > 2)
-                    {
-                        Res = x;
-                        decimal compP = 1 / p / 2;
-                        for(int i = 0; i < compP; i++) { Res = dcExponent(Res, 1/2m); }
-                        return Res;
-                    }
-                    decimal n = 0,
-                            prevN = (decimal)(Math.Sqrt((double)n)) + x / 2;
-                    while (true)
-                    {
-                        xPrevN = new Exponent(prevN, (int)(1 / p - 1));
-                        n = (prevN + x / xPrevN.Res) / 2;
-                        if (Absolute(prevN - n) < 0.0000000000000000000000000001m) { break; }
-                        prevN = n;
-                    }
-                    Res = n;
-                }
-                else { Res = 1m; }
+                catch (Exception ex) { MessageBox.Show("Maths Error" + ex.ToString(), "Error"); }
+                return 0;
             }
-            catch (Exception ex) { MessageBox.Show("Maths Error" + ex.ToString(), "Error"); }
-            if (pos) { return Res; }
-            else { return 1 / Res; }
         }
 
         public decimal intExponent(int x, int p)
