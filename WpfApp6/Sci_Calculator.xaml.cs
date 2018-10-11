@@ -72,17 +72,31 @@ namespace WpfApp6
 
         public void parse(string exp)
         {
-            string term = "";
+            Dictionary<string, decimal> dTerms = new Dictionary<string, decimal>();
+            List<string> lTerms = new List<string>();
+            StringBuilder term = new StringBuilder();
             if (exp.Contains('('))
             {
+                lTerms = exp.Split('(', ')').ToList();
+                foreach (string t in lTerms)
+                {
+
+                }
                 foreach (Char ch in exp)
                 {
                     if (ch == '(')
                     {
                         while (ch != ')')
-                        term += ch;
+                        {
+                            term.Append(ch);
+
+                        }
                     }
                 }
+            }
+            else if (exp.Contains('x'))
+            {
+
             }
         }
 
