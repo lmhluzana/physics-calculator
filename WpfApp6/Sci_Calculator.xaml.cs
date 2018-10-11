@@ -70,6 +70,22 @@ namespace WpfApp6
             return num;
         }
 
+        public void parse(string exp)
+        {
+            string term = "";
+            if (exp.Contains('('))
+            {
+                foreach (Char ch in exp)
+                {
+                    if (ch == '(')
+                    {
+                        while (ch != ')')
+                        term += ch;
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Exponent Function
@@ -553,6 +569,71 @@ namespace WpfApp6
         private void btnDivide_Click(object sender, RoutedEventArgs e)
         {
             txtInp.Text += " / ";
+        }
+
+        private void btnOne_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "1";
+        }
+
+        private void btnTwo_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "2";
+        }
+
+        private void btnThree_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "3";
+        }
+
+        private void btnFour_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "4";
+        }
+
+        private void btnFive_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "5";
+        }
+
+        private void btnSix_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "6";
+        }
+
+        private void btnSeven_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "7";
+        }
+
+        private void btnEight_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "8";
+        }
+
+        private void btnNine_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "9";
+        }
+
+        private void btnZero_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "0";
+        }
+
+        private void btnDecimal_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += ".";
+        }
+
+        private void btnOrder_Click(object sender, RoutedEventArgs e)
+        {
+            txtInp.Text += "x 10^()";
+        }
+
+        private void btnEquals_Click(object sender, RoutedEventArgs e)
+        {
+            parse(txtInp.Text);
         }
     }
 }
