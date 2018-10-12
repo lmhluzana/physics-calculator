@@ -4,25 +4,36 @@ using System.Windows;
 
 namespace WpfApp6
 {
+    /// <summary>
+    /// Base interface for functions
+    /// </summary>
     public class IFunction : Sci_Calculator
     {
         public decimal X { get; set; }
         public decimal Res { get; set; }
     }
 
+    /// <summary>
+    /// Class for all trig functions
+    /// </summary>
     public class Trig : IFunction
     {
         public string Funct { get; private set; }
-        public bool specCase = false;
+        public bool specCase = false; // Special angle indicator
         public bool sinPos;
-        public bool cosPos;
+        public bool cosPos; // Sign indicators
 
+        /// <summary>
+        /// Call the required trig function
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="funct"></param>
         public Trig(decimal x, string funct)
         {
             Funct = funct;
-            X = reductionForm(x);
-            List<decimal> specAngles = new List<decimal> { 0m, pi/3, pi/2, pi*2/3, pi, pi*4/3, pi*3/2, pi*5/3, 2*pi };
-            if (specAngles.Contains(x)) { specCase = true; }
+            X = reductionForm(x); // Get x in more basic form
+            List<decimal> specAngles = new List<decimal> { 0m, pi/3, pi/2, pi*2/3, pi, pi*4/3, pi*3/2, pi*5/3, 2*pi }; // List of special angles
+            if (specAngles.Contains(x)) { specCase = true; } // Check if this is a special case
 
             try
             {
@@ -33,7 +44,7 @@ namespace WpfApp6
                     case ("cos"):
                         Res = cos(X); break;
                     case ("tan"):
-                        if (X == pi/2 || X == pi*3/2) throw new InvalidOperationException("tan limit");
+                        if (X == pi/2 || X == pi*3/2) throw new InvalidOperationException("tan limit"); // Check for the limits
                         Res = sin(X) / cos(X); break;
                     case ("arcsin"):
                         if (X > 1m) throw new InvalidOperationException("arcsin limit");
@@ -50,12 +61,12 @@ namespace WpfApp6
                     case ("cot"):
                         Res = cos(X) / sin(X); break;
                     default:
-                        throw new InvalidOperationException("no funct");
+                        throw new InvalidOperationException("no funct"); // In case no function is identified
                 }
             }
             catch (InvalidOperationException ex )
             {
-                if (ex.Message == "no funct") { MessageBox.Show("No function recognised", "Maths Error"); }
+                if (ex.Message == "no funct") { MessageBox.Show("No function recognised", "Read Error"); }
                 else if (ex.Message == "arcsin limit") { MessageBox.Show($"arcsinx is not defined for x = {x}", "Trigonometry Error"); }
                 else if (ex.Message == "arccos limit") { MessageBox.Show($"arccosx is not defined for x = {x}", "Trigonometry Error"); }
                 else { MessageBox.Show($"tanx is not defined for x = {x}", "Trigonometry Error"); }
@@ -65,72 +76,75 @@ namespace WpfApp6
             {
                 if (specCase == true)
                 {
-                    decimal[] sinSpecCase = { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1, 0m, rt3/2, rt2/2, 1/2, 0m, 0m };
+                    decimal[] sinSpecCase = { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1, 0m, rt3/2, rt2/2, 1/2, 0m, 0m }; // Special cases for sin, some elements are 0 as each element represents pi/12 to simplify identification
                     int i = Convert.ToInt32((theta / pi) * 11);
                     if (sinPos) { return sinSpecCase[i]; }
                     return -sinSpecCase[i];
                 }
+                // Taylor series Implementation
                 int len = 28;
-                decimal Res = theta;
+                decimal Res = theta; // Start at theta as the first element of the taylor series is x
                 decimal prevR = 0;
                 int[] exp = new int[len];
-                int I = 1;
-                Exponent sign;
-                Exponent t;
+                int I = -1, // A seperate counter for the alternating sign
+                    I0 = I;
+                Exponent t; 
                 
-                for (int n = 2; n < len; n++)
+                for (int n = 3; n < len; n++) // Iterate until res is found, or until a given maximum
                 {
-                    if (n % 2 == 1)
+                    if (n % 2 == 1) // Only use odd exponents
                     {
-                        sign = new Exponent(-1, I++);
-                        t = new Exponent(theta, n);
-                        Res += sign.Res * t.Res / (decimal)factorial(n);
-                        if (Absolute(Res - prevR) < 0.00000000000000000000000001m) { break; }
+                        I = I * I0; // Alternate sign
+                        t = new Exponent(theta, n); 
+                        Res += I * t.Res / (decimal)factorial(n); // Add result to previous result
+                        if (Absolute(Res - prevR) < 0.00000000000000000000000001m) { break; } // Compare result with previous result
                         prevR = Res;
                     }
                 }
                 if (sinPos) { return Res; }
                 return -Res;
             }
-
+            
             decimal cos(decimal theta)
             {
                 if (specCase == true)
                 {
-                    decimal[] cosSpecCase = { 1m, 0m, rt3 / 2, rt2 / 2, 1/2, 0m, 0m, 0m, 1/2, rt2/2, rt3/2, 1 };
+                    decimal[] cosSpecCase = { 1m, 0m, rt3 / 2, rt2 / 2, 1/2, 0m, 0m, 0m, 1/2, rt2/2, rt3/2, 1 }; // Special cases for cos
                     int i = Convert.ToInt32((theta / pi) * 11);
                     if (cosPos) { return cosSpecCase[i]; }
                     return -cosSpecCase[i];
                 }
+                // Taylor series Implementation
                 int len = 28;
-                decimal Res = 1;
+                decimal Res = 1; // Start with res = 1 as the first element of the taylor series is 1
                 decimal prevR = 0;
                 int[] exp = new int[len];
-                Exponent sign;
+                int I = 1,
+                    I0 = -1; // Alternating sign
                 Exponent t;
                 
-                for (int n = 0; n < len; n++)
+                for (int n = 2; n < len; n++) // Loop till result found
                 {
                     if (n % 2 == 0)
                     {
-                        sign = new Exponent(-1, n);
+                        I = I * I0; // Alternate sign
                         t = new Exponent(theta, n);
-
-                        Res += sign.Res * t.Res / (decimal)factorial(n);
+                        Res += I * t.Res / (decimal)factorial(n); // Add result to previous result
                         if (Absolute(Res - prevR) < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
                 }
-                if (cosPos) { return Res; }
+                Res = Absolute(Res);
+                if (cosPos) return Res;
                 return -Res;
             }
 
             decimal arcsin(decimal theta)
             {
-                List<decimal> arcsinSpecCase = new List<decimal> { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 };
+                List<decimal> arcsinSpecCase = new List<decimal> { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1, 0m, rt3 / 2, rt2 / 2, 1 / 2, 0m, 0m }; //Arcsin special cases
                 if (arcsinSpecCase.Contains(theta))
                 {
-                    foreach (decimal y in specAngles)
+                    foreach (decimal y in specAngles) // Go through special angles, checking the value of sin at that angle against theta
                     {
                         if (theta == sin(y))
                         {
@@ -139,8 +153,8 @@ namespace WpfApp6
                         }
                     }
                 }
-                int len = 100;
-                decimal Res = theta;
+                int len = 28;
+                decimal Res = theta; // First element is theta
                 decimal prevR = 0;
                 int[] exp = new int[len];
                 Exponent t;
@@ -148,37 +162,33 @@ namespace WpfApp6
 
                 for (int n = 3; n < len; n++)
                 {
-                    if (n % 2 == 1)
+                    if (n % 2 == 1) // Only odd 
                     {
                         t = new Exponent(theta, n);
                         bin = new Exponent(2, n - 1);
-                        Res += t.Res / (decimal)(bin.Res * (n + 1));
+                        Res += t.Res / (bin.Res * (n + 1));
                         if (Absolute(Res - prevR) < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
                 }
-                if (sinPos) { return Res; }
-                return -Res;
+                return Res;
             }
 
             decimal arccos(decimal theta)
             {
-                List<decimal> arccosSpecCase = new List<decimal> { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 };
+                List<decimal> arccosSpecCase = new List<decimal> { 0m, 0m, 0.5m, rt2 / 2, rt3 / 2, 0m, 1 }; // Arccos special cases
                 Trig cosComp;
-                Decimal res = 0m;
+                decimal res = 0m;
                 try
                 {
                     if (arccosSpecCase.Contains(theta))
                     {
                         foreach (decimal y in specAngles)
                         {
-                            cosComp = new Trig(y, "cos");
-                            if (theta == cosComp.Res)
+                            if (theta == cos(y)) // Check theta against cos at that angle
                             {
-                                if (sinPos) { res = y; }
-                                res = -y;
+                                return res;
                             }
-                            else { throw new Exception(); }
                         }
                     }
                 else { res = pi / 2 - arcsin(theta); }
@@ -189,22 +199,25 @@ namespace WpfApp6
 
             decimal reductionForm(decimal theta)
             {
-                if (theta > 2 * pi) { theta = theta % (2 * pi); }
-                sinPos = (theta < pi) ? true : false;
-                cosPos = (((theta > pi/2) && (theta <= pi)) || (theta >= pi * 3/4)) ? true : false;
-                theta = theta % pi;
+                if (theta > 2 * pi) { theta = theta % (2 * pi); } // Reduce the angle to less than 2 pi
+                sinPos = (theta < pi);
+                cosPos = ((theta > pi*3/2) || (theta <= pi/2)); // Get sign indicators for sin and cos
+                theta = theta % pi; // Reduce the angle to pi/2
                 return theta;
             }
         }
     }
     
+    /// <summary>
+    /// Natural logs class, base class for logarithms
+    /// </summary>
     public class NatLogarithm : IFunction
     {
         public NatLogarithm(decimal n)
         {
             try
             {
-                if (n == 0) throw new InvalidOperationException();
+                if (n == 0) throw new InvalidOperationException(); // Check for limits
                 X = n;
                 decimal[] lns = { 0m,
                     0.693147180559945309417232121458m,
@@ -215,39 +228,43 @@ namespace WpfApp6
                     1.94591014905531330510535274344m,
                     2.07944154167983592825169636437m,
                     2.19722457733621938279049047384m,
-                    2.30258509299404568401799145468m };
+                    2.30258509299404568401799145468m }; // List of ln from 1-10 to speed up program
                 decimal ln2 = lns[1];
 
                 ulong exp = 0;
                 decimal temp = n;
-                while (temp > 2) { temp = temp / 2; exp++; }
+                while (temp > 2) { temp = temp / 2; exp++; } // Reduce n by dividing by 2, count the number of times it is divided
                 n = temp;
 
                 int intN = (int)n;
-                if ( (decimal)intN == n) { Res = lns[intN - 1]; }
+                if ( intN == n) { Res = lns[intN - 1]; } // If just a common int, use list
                 else
                 {
-                    Res = n - 1;
-                    Exponent sign;
+                    Res = n - 1; // This taylor series is defined for ln(x - 1), to avoid ln(0)
                     decimal prevR = 0,
                             XN = n - 1,
                             XN0 = XN;
+                    int I = 1,
+                        I0 = -1;
 
                     for (int i = 2; i < 50; i++)
                     {
-                        sign = new Exponent(-1, i - 1);
+                        I = I * I0;
                         XN = XN * XN0;
-                        Res = Res + (sign.Res * XN) / i;
+                        Res = Res + (I * XN) / i;
                         if (Absolute(Res.CompareTo(prevR)) < 0.00000000000000000000000001m) { break; }
                         prevR = Res;
                     }
                 }
-                Res = exp * ln2 + Res;
+                Res = exp * ln2 + Res; // Return res plus ln2 times the number of divisions by 2
             }
             catch (InvalidOperationException ex) { MessageBox.Show("Loga is not defined for a = 0." + ex.ToString(), "Logarithm Error"); }
         }
     }
 
+    /// <summary>
+    /// Derived logarithm class for all non natural logarithms
+    /// </summary>
     public class Logarithm : NatLogarithm
     {
         public decimal B;
@@ -258,19 +275,19 @@ namespace WpfApp6
             long count = 0;
             decimal tempN = n;
             decimal tempB = b;
-            bool pos = (b > 1) ? true : false;
+            bool pos = (b > 1) ? true : false; // Check if pos
 
             try
             {
-                if (b == 1 || b < 0) { throw new InvalidOperationException(); }
-                if (n == 1) { Res = 0m; }
-                else if (n % b == 0)
+                if (b == 1 || b < 0 || n == 0) { throw new InvalidOperationException(); } 
+                if (n == 1) { Res = 0m; } // Check for limits and specials
+                else if (n % b == 0) // Check if  basic logarithm
                 {
                     if (!pos) { tempB = 1 / tempB; }
                     while (true)
                     {
                         tempN = tempN / tempB;
-                        count++;
+                        count++; // Count number of divisions
                         if (tempN == 1) break;
                     }
                     if (pos) { Res = count; }
@@ -278,15 +295,9 @@ namespace WpfApp6
                 }
                 else
                 {
-                    if (n == 0) { Res = 0; }
-                    //logX = new NatLogarithm(n);
-                    //else { Res = logX.Res / logB.Res; }
-                    else
-                    {
-                        b = (new NatLogarithm(b)).Res;
-                        if (pos) { Res = n / b; }
-                        else { Res = -n / b; }
-                    }
+                    b = (new NatLogarithm(b)).Res; // Get logarithm by taking the natural log of the base and x, and dividing them
+                    if (pos) { Res = n / b; }
+                    else { Res = -n / b; }
                 }
             }
             catch (InvalidOperationException) { MessageBox.Show($"Logarithms domain error. \n x must be positive, and b cannot equal 1", "Domain Error"); Res = Decimal.MinValue; }
@@ -304,26 +315,26 @@ namespace WpfApp6
             P = p;
             intX = (int)x;
             intP = (int)p;
-            if (intX == x && intP == p) { Res = intExponent(intX, intP); }
-            else { Res = dcExponent(x, p); }
+            if (intX == x && intP == p) { Res = intExponent(intX, intP); } // Check for a basic int problem
+            else { Res = dcExponent(x, p); } // Decimal problems
         }
 
         public decimal dcExponent(decimal x, decimal p)
         {
-            if (X == 0) { return 0; }
+            if (X == 0) { return 0; } // Check for 0
             else
             {
                 decimal res = 1;
-                bool pos = (p >= 0) ? true : false;
+                bool pos = (p >= 0) ? true : false; // Chekc if positive, then use absolute value
                 p = Absolute(p);
 
                 try
                 {
-                    if (p > 1)
+                    if (p > 1) // For non roots
                     {
                         long exp = 0;
                         decimal temp = p;
-                        while (temp > 1) { temp = temp / 2; exp++; }
+                        while (temp > 1) { temp = temp / 2; exp++; } // 
                         p = temp;
                         for (int n = 0; n < exp; n++)
                         {
@@ -355,11 +366,20 @@ namespace WpfApp6
                             {
                                 y = y * y0;
                                 res = prevR + y / (decimal)factorial(n);
-                                if (Absolute(res - prevR) < 0.0000000000000000000000000001m)
+                                if (Absolute(res - prevR) < 0.0000000000000000000000000001m) { break; }
+                                prevR = res;
+                                if (y > 1000000000000000000000000000m)
                                 {
+                                    y = y / 1000000000000000000000000000m;
+                                    for (int N = n; N < 28; N++)
+                                    {
+                                        y = y * y0;
+                                        res = prevR + (y / (decimal)factorial(n))* 1000000000000000000000000000m;
+                                        if (Absolute(res - prevR) < 0.0000000000000000000000000001m) { break; }
+                                        prevR = res;
+                                    }
                                     break;
                                 }
-                                prevR = res;
                             }
                         }
                     }
