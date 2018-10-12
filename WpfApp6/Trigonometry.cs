@@ -325,7 +325,7 @@ namespace WpfApp6
             else
             {
                 decimal res = 1;
-                bool pos = (p >= 0) ? true : false; // Chekc if positive, then use absolute value
+                bool pos = (p >= 0); // Check if exponent is positive, then use absolute value
                 p = Absolute(p);
 
                 try
@@ -334,44 +334,42 @@ namespace WpfApp6
                     {
                         long exp = 0;
                         decimal temp = p;
-                        while (temp > 1) { temp = temp / 2; exp++; } // 
+                        while (temp > 1) { temp = temp / 2; exp++; } // Reduce p to smaller more manageable num
                         p = temp;
                         for (int n = 0; n < exp; n++)
                         {
                             x = x * x;
                         }
-                        if (p != 1) { res = dcExponent(x, p); }
+                        if (p != 1) { res = dcExponent(x, p); } // Get remainder
                         else { res = x; }
                     }
-                    else if (p == 1m) { res = x; }
-                    else if (p > 0)
+                    else if (p == 1m) { res = x; } // Check for p = 1 
+                    else if (p > 0) // Roots
                     {
                         res = 0;
                         decimal tempX = x;
-                        if ((1 / p) % 2 == 0 && 1 / p > 2)
+                        if ((1 / p) % 2 == 0 && 1 / p > 2) // Check for some form of square roots
                         {
                             decimal compP = 1 / p / 2;
-                            for (int i = 0; i < compP; i++) { tempX = dcExponent(tempX, 1 / 2m); }
-                            res = tempX;
+                            for (int i = 0; i < compP; i++) { tempX = dcExponent(tempX, 1 / 2m); } // Take square recursively
+                            res = tempX; 
                         }
-                        else
+                        else // Taylor series implementation of e^n, with n = p*lnx
                         {
-                            NatLogarithm ln = new NatLogarithm(x);
-                            decimal y0 = ln.Res * p,
+                            NatLogarithm ln = new NatLogarithm(x); // Get lnx
+                            decimal y0 = ln.Res * p, // == ln x^p
                                     y = 1;
-                            Exponent exp;
-                            decimal prevR = 1,
-                                    expY = 1;
+                            decimal prevR = 1;
                             for (int n = 1; n < 28; n++)
                             {
-                                y = y * y0;
+                                y = y * y0; 
                                 res = prevR + y / (decimal)factorial(n);
                                 if (Absolute(res - prevR) < 0.0000000000000000000000000001m) { break; }
                                 prevR = res;
-                                if (y > 1000000000000000000000000000m)
+                                if (y > 1000000000000000000000000000m) // Catch y exceeding limits of decimals
                                 {
                                     y = y / 1000000000000000000000000000m;
-                                    for (int N = n; N < 28; N++)
+                                    for (int N = n; N < 28; N++) // Continue with reduced y and factor
                                     {
                                         y = y * y0;
                                         res = prevR + (y / (decimal)factorial(n))* 1000000000000000000000000000m;
@@ -383,10 +381,10 @@ namespace WpfApp6
                             }
                         }
                     }
-                    else { return 1m; }
+                    else { return 1m; } // Check for zero
 
                     if (pos) { return res; }
-                    else { return 1 / res; }
+                    else { return 1 / res; } 
                 }
                 catch (Exception ex) { MessageBox.Show("Maths Error" + ex.ToString(), "Error"); }
                 return 0;
@@ -395,18 +393,16 @@ namespace WpfApp6
 
         public decimal intExponent(int x, int p)
         {
-            if (x == 0) { return  0; }
-            bool pos = (p >= 0) ? true : false;
+            if (x == 0) { return  0; } // Check for specials
+            if ( p == 0) { return 1; }
+            bool pos = (p >= 0); 
             p = Absolute(p);
             Res = 1;
-            if (p >= 1)
+
+            for (int b = 0; b < p; b++)
             {
-                for (int b = 0; b < p; b++)
-                {
-                    Res = Res * x;
-                }
+                Res = Res * x;
             }
-            else { Res = 1; }
 
             if (pos) return Res;
             else { return 1 / Res; }

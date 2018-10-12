@@ -350,8 +350,8 @@ namespace WpfApp6
             //xObj = new Exponent(16m, 1 / 2m);
             //Tester.TestEq(xObj.Res, 4m);
             //xObj = new Exponent(9m, 1 / 2m);
-            //Tester.TestEq(xObj.Res, 3m); 
-            //xObj = new Exponent(27m, 1 / 3m); 
+            //Tester.TestEq(xObj.Res, 3m);
+            //xObj = new Exponent(27m, 1 / 3m);
             //Tester.TestEq(xObj.Res, 3m);
             //xObj = new Exponent(64m, 1 / 3m);
             //Tester.TestEq(xObj.Res, 4m);
